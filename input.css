@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "quicksand-regular";
+  }
+}
+
+body {
+  @apply bg-base-300;
+}
+
+@font-face {
+  font-family: "quicksand-light";
+  src: url("/pictashare/fonts/quicksand-light.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "quicksand-medium";
+  src: url("/pictashare/fonts/quicksand-medium.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "quicksand-regular";
+  src: url("/pictashare/fonts/quicksand-regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "quicksand-semibold";
+  src: url("/pictashare/fonts/quicksand-semibold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "quicksand-bold";
+  src: url("/pictashare/fonts/quicksand-bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
+* {
+  @apply text-white;
+}
+
+.button {
+  @apply py-3 px-6 font-extrabold text-lg bg-white text-black rounded-lg relative inline-block h-auto transition-transform duration-300;
+}
+
+.button::after {
+  content: "";
+  @apply absolute top-0 left-0 w-full h-full bg-black z-20 rounded-lg opacity-0;
+}
+
+.button:hover::after {
+  @apply opacity-20;
+}
+
+.button.outline {
+  @apply bg-transparent outline-2 outline-white text-white -outline-offset-2 transition-all duration-300;
+}
+
+.button.outline:hover {
+  @apply bg-white text-black;
+}
+
+.button.outline::after {
+  @apply hidden;
+}
+
+.button.primary {
+  @apply bg-primary text-white;
+}
+
+.button.outline.primary {
+  @apply bg-transparent outline-primary text-primary;
+}
+
+.button.outline.primary:hover {
+  @apply bg-primary text-white;
+}
+
+.button.ghost {
+  @apply bg-transparent text-white;
+}
+
+.button.ghost::after {
+  @apply bg-white;
+}
+
+.form-input {
+  @apply rounded-lg border-base-200 bg-transparent border-2 mb-4;
+}
+
+.submit {
+  @apply w-full bg-white border-none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--bg-base-300) inset !important;
+}
