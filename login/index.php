@@ -18,7 +18,7 @@ if (isset($_SESSION["user"])) {
 <body class="h-full flex items-center justify-center">
 
     <form action="../includes/login.php" method="post" class="flex flex-col w-60 h-full">
-        <h1 class="text-6xl">Login</h1>
+        <h1 class="text-5xl text-center mb-6">Login</h1>
         <label for="username">Username</label>
         <input type="text" name="username" id="" class="form-input">
         <!-- <label for="email">Email</label>

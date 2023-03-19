@@ -32,7 +32,7 @@ include "nav.php"
                 <a href="gallery" class="button">Scroll the gallery</a>
             </div>
         </div>
-        <div class="w-8/12">
+        <div class="w-8/12 min-w-[420px]">
             <picture>
                 <source srcset="/pictashare/images/hero/phone.avif" type="image/avif">
                 <source srcset="/pictashare/images/hero/phone.webp" type="image/webp">

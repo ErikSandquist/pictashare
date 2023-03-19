@@ -57,7 +57,7 @@ body {
 
 .button::after {
   content: "";
-  @apply absolute top-0 left-0 w-full h-full bg-black z-20 rounded-lg opacity-0;
+  @apply absolute top-0 left-0 w-full h-full bg-black z-20 rounded-lg opacity-0 transition-opacity duration-150;
 }
 
 .button:hover::after {

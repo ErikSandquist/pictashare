@@ -8,5 +8,5 @@ if (isset($_POST["submit"])) {
 
     loginUser($conn, $username, $psw);
 }
-header("Location:../index.php");
+header("Location:../");
 exit();
