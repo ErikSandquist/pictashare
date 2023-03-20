@@ -20,7 +20,7 @@ session_start();
         <a href="gallery" class="button ghost">Gallery</a>
         <?php
         if (isset($_SESSION['userid'])) {
-            echo '<a href="/pictashare/profile" class="button outline">Profile</a>';
+            echo '<a href="/pictashare/profile/?user=' . $_SESSION["username"] . '" class="button outline">Profile</a>';
         } else {
             echo '<a href="/pictashare/login" class="button outline">Login</a>
                 <a href="/pictashare/signup" class="button">Sign up</a>';
