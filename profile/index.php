@@ -55,16 +55,40 @@ $days  = $date2->diff($date1)->format('%a');
             echo '<img src="/pictashare/images/default/profile.svg" alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-16 ml-12 inline">';
         }
         ?>
-        <div class="px-12 py-4">
+        <div class="flex px-12 p-4">
+            <div class="w-full">
+                <?php
+                if (isset($_GET["edit"]) and $_GET["edit"] == "true") {
+                    echo '<form action="">
+                        <input type="text" name="nickname" placeholder="Nickname" value="' . $userInfo["nickname"] . '" class="form-input profile-input">
+                        <input type="text" name="nickname" placeholder="Nickname" value="' . $userInfo["username"] . '" class="form-input profile-input">
+                        <textarea name="description" cols="30" rows="10" class="form-input profile-input">' . $userInfo["description"] . '</textarea>
+                        </form>';
+                } else {
+                    if ($userInfo["nickname"] !== null) {
+                        echo '<h1 class="font-semibold text-2xl">' . $userInfo["nickname"] . '</h1>';
+                    } else {
+                        echo '<h1 class="font-semibold text-2xl">' . ucfirst($userInfo["username"]) . '</h1>';
+                    }
+
+                    echo '<h2 class="-mt-1 opacity-60">@' . $userInfo["username"] . '</h2>';
+                    echo '<p class="mt-4">' . $userInfo["description"] . '</p>';
+                }
+                ?>
+            </div>
             <?php
-            if ($userInfo["nickname"] !== null) {
-                echo '<h1 class="font-semibold text-2xl">' . $userInfo["nickname"] . '</h1>';
-            } else {
-                echo '<h1 class="font-semibold text-2xl">' . ucfirst($userInfo["username"]) . '</h1>';
+            if (isset($_SESSION["username"]) and $_SESSION["username"] == $username) {
+                if (isset($_GET["edit"]) and $_GET["edit"] == "true") {
+                    echo '<div class="w-full flex justify-end items-start">
+                            <a href="?edit=false" class="button">Save profile</a>
+                        </div>';
+                } else {
+                    echo '<div class="w-full flex justify-end items-start">
+                    <a href="?edit=true" class="button outline">Edit profile</a>
+                </div>';
+                }
             }
             ?>
-            <h2 class="-mt-1 opacity-60">@<?php echo $userInfo["username"] ?></h2>
-            <p class="mt-4"><?php echo $userInfo["description"] ?></p>
         </div>
         <div class="flex gap-4 p-4 px-12">
             <div class="w-4/12 flex flex-col gap-4">
