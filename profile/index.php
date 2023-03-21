@@ -2,6 +2,8 @@
 
 include "../nav.php";
 
+$editMode = $_GET["edit"];
+
 if (isset($_GET["user"])) {
     $username = $_GET["user"];
 } elseif (isset($_SESSION["username"])) {
@@ -43,27 +45,47 @@ $days  = $date2->diff($date1)->format('%a');
 <body>
     <main class="mt-40 w-[800px] mx-auto bg-base-200 rounded-3xl">
         <?php
-        if ($userInfo["picture"] !== null) {
-            echo '<img src="data:image/jpeg;base64,' . base64_encode($userInfo['banner']) . '" alt="" class="w-full h-36 rounded-t-3xl">';
-        } else {
-            echo '<img src="/pictashare/images/default/banner.jpg" alt="" class="w-full h-36 rounded-t-3xl">';
-        }
+        if (isset($editMode) and $editMode == "false") {
+            if ($userInfo["banner"] !== null) {
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($userInfo['banner']) . '" alt="" class="w-full h-36 rounded-t-3xl">';
+            } else {
+                echo '<img src="/pictashare/images/default/banner.jpg" alt="" class="w-full h-36 rounded-t-3xl">';
+            }
 
-        if ($userInfo["banner"] !== null) {
-            echo '<img src="data:image/jpeg;base64,' . base64_encode($userInfo['picture']) . '" alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-20 ml-12 inline">';
-        } else {
-            echo '<img src="/pictashare/images/default/profile.svg" alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-16 ml-12 inline">';
+            if ($userInfo["picture"] !== null) {
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($userInfo['picture']) . '" alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-20 ml-12 inline">';
+            } else {
+                echo '<img src="/pictashare/images/default/profile.svg" alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-16 ml-12 inline">';
+            }
+        } elseif (isset($editMode) and $editMode == "true") {
+            echo '<form action="/pictashare/includes/saveprofile.php" method="post">';
+            echo '<label class="cursor-pointer">
+            <input type="file" class="hidden"/>';
+            if ($userInfo["banner"] !== null) {
+                echo '<div class="file-upload bg-base-200 w-full h-36 rounded-t-3xl overflow-hidden"><img src="data:image/jpeg;base64,' . base64_encode($userInfo['banner']) . '" alt="" class=""></div>';
+            } else {
+                echo '<div class="file-upload bg-base-200 w-full h-36 rounded-t-3xl overflow-hidden"><img src="/pictashare/images/default/banner.jpg" alt="" class=""></div>';
+            }
+            echo '</label>';
+
+            echo '<label class="h-32 w-32 -mt-16 ml-12 block cursor-pointer">
+                    <input type="file" class="hidden"/>';
+            if ($userInfo["picture"] !== null) {
+                echo '<div class="file-upload rounded-full bg-base-200 p-2 overflow-hidden"><img src="data:image/jpeg;base64,' . base64_encode($userInfo['picture']) . '" alt="" class=" -mt-20 ml-12 inline"></div>';
+            } else {
+                echo '<div class="file-upload rounded-full bg-base-200 p-2 overflow-hidden"><img src="/pictashare/images/default/profile.svg" alt="" class=""></div>';
+            }
+            echo '</label>';
         }
         ?>
         <div class="flex px-12 p-4">
             <div class="w-full">
                 <?php
-                if (isset($_GET["edit"]) and $_GET["edit"] == "true") {
-                    echo '<form action="">
-                        <input type="text" name="nickname" placeholder="Nickname" value="' . $userInfo["nickname"] . '" class="form-input profile-input">
+                if (isset($editMode) and $editMode == "true") {
+                    echo
+                    '<input type="text" name="nickname" placeholder="Nickname" value="' . $userInfo["nickname"] . '" class="form-input profile-input">
                         <input type="text" name="nickname" placeholder="Nickname" value="' . $userInfo["username"] . '" class="form-input profile-input">
-                        <textarea name="description" cols="30" rows="10" class="form-input profile-input">' . $userInfo["description"] . '</textarea>
-                        </form>';
+                        <textarea name="description" cols="30" rows="10" class="form-input profile-input">' . $userInfo["description"] . '</textarea>';
                 } else {
                     if ($userInfo["nickname"] !== null) {
                         echo '<h1 class="font-semibold text-2xl">' . $userInfo["nickname"] . '</h1>';
@@ -78,9 +100,9 @@ $days  = $date2->diff($date1)->format('%a');
             </div>
             <?php
             if (isset($_SESSION["username"]) and $_SESSION["username"] == $username) {
-                if (isset($_GET["edit"]) and $_GET["edit"] == "true") {
+                if (isset($editMode) and $editMode == "true") {
                     echo '<div class="w-full flex justify-end items-start">
-                            <a href="?edit=false" class="button">Save profile</a>
+                            <button class="button" name="submit">Save profile</a>
                         </div>';
                 } else {
                     echo '<div class="w-full flex justify-end items-start">
@@ -116,6 +138,11 @@ $days  = $date2->diff($date1)->format('%a');
                 ?>
             </div>
         </div>
+        <?php
+        if (isset($editMode) and $editMode == "true") {
+            echo "</form>";
+        }
+        ?>
     </main>
 </body>
 
