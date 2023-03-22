@@ -744,6 +744,10 @@ html {
   position: absolute;
 }
 
+.relative {
+  position: relative;
+}
+
 .left-0 {
   left: 0px;
 }
@@ -912,6 +916,10 @@ html {
 
 .gap-40 {
   gap: 10rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .overflow-hidden {

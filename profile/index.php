@@ -2,8 +2,6 @@
 
 include "../nav.php";
 
-$editMode = $_GET["edit"];
-
 if (isset($_GET["user"])) {
     $username = $_GET["user"];
 } elseif (isset($_SESSION["username"])) {
@@ -11,6 +9,12 @@ if (isset($_GET["user"])) {
 } else {
     header("Location:../login");
     exit();
+}
+
+if (isset($_GET["edit"]) and $_SESSION["username"] == $username) {
+    $editMode = $_GET["edit"];
+} else {
+    $editMode = "false";
 }
 
 require_once("../includes/db.php");
@@ -23,7 +27,7 @@ if ($userInfo === false) {
     exit();
 }
 
-if (isset($_GET["error"])) {
+if (isset($_GET["error"]) and $_GET["error"] == "notfound") {
     exit();
 }
 
@@ -47,33 +51,33 @@ $days  = $date2->diff($date1)->format('%a');
         <?php
         if (isset($editMode) and $editMode == "false") {
             if ($userInfo["banner"] !== null) {
-                echo '<img src="data:image/jpeg;base64,' . base64_encode($userInfo['banner']) . '" alt="" class="w-full h-36 rounded-t-3xl">';
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($userInfo['banner']) . '" alt="" class="w-full h-36 rounded-t-3xl object-cover">';
             } else {
-                echo '<img src="/pictashare/images/default/banner.jpg" alt="" class="w-full h-36 rounded-t-3xl">';
+                echo '<img src="/pictashare/images/default/banner.jpg" alt="" class="w-full h-36 rounded-t-3xl object-cover">';
             }
 
             if ($userInfo["picture"] !== null) {
-                echo '<img src="data:image/jpeg;base64,' . base64_encode($userInfo['picture']) . '" alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-20 ml-12 inline">';
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($userInfo['picture']) . '" alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-16 ml-12 inline object-cover">';
             } else {
-                echo '<img src="/pictashare/images/default/profile.svg" alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-16 ml-12 inline">';
+                echo '<img src="/pictashare/images/default/profile.svg" alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-16 ml-12 inline object-cover">';
             }
         } elseif (isset($editMode) and $editMode == "true") {
-            echo '<form action="/pictashare/includes/saveprofile.php" method="post">';
+            echo '<form action="/pictashare/includes/saveprofile.php" method="post" enctype="multipart/form-data">';
             echo '<label class="cursor-pointer">
-            <input type="file" class="hidden"/>';
+            <input type="file" class="hidden" name="banner"/>';
             if ($userInfo["banner"] !== null) {
-                echo '<div class="file-upload bg-base-200 w-full h-36 rounded-t-3xl overflow-hidden"><img src="data:image/jpeg;base64,' . base64_encode($userInfo['banner']) . '" alt="" class=""></div>';
+                echo '<div class="file-upload bg-base-200 w-full h-36 rounded-t-3xl overflow-hidden flex items-center"><img src="data:image/jpeg;base64,' . base64_encode($userInfo['banner']) . '" alt="" class="object-cover"></div>';
             } else {
-                echo '<div class="file-upload bg-base-200 w-full h-36 rounded-t-3xl overflow-hidden"><img src="/pictashare/images/default/banner.jpg" alt="" class=""></div>';
+                echo '<div class="file-upload bg-base-200 w-full h-36 rounded-t-3xl overflow-hidden flex items-center"><img src="/pictashare/images/default/banner.jpg" alt="" class="object-cover"></div>';
             }
             echo '</label>';
 
-            echo '<label class="h-32 w-32 -mt-16 ml-12 block cursor-pointer">
-                    <input type="file" class="hidden"/>';
+            echo '<label class="h-32 w-32 -mt-16 ml-12 block relative cursor-pointer">
+                    <input type="file" class="hidden" name="picture"/>';
             if ($userInfo["picture"] !== null) {
-                echo '<div class="file-upload rounded-full bg-base-200 p-2 overflow-hidden"><img src="data:image/jpeg;base64,' . base64_encode($userInfo['picture']) . '" alt="" class=" -mt-20 ml-12 inline"></div>';
+                echo '<div class="file-upload rounded-full bg-base-200 p-2 overflow-hidden w-full h-full flex items-center"><img src="data:image/jpeg;base64,' . base64_encode($userInfo['picture']) . '" alt="" class="rounded-full"></div>';
             } else {
-                echo '<div class="file-upload rounded-full bg-base-200 p-2 overflow-hidden"><img src="/pictashare/images/default/profile.svg" alt="" class=""></div>';
+                echo '<div class="file-upload rounded-full bg-base-200 p-2 overflow-hidden w-full h-full flex items-center"><img src="/pictashare/images/default/profile.svg" alt="" class="rounded-full"></div>';
             }
             echo '</label>';
         }
@@ -84,7 +88,7 @@ $days  = $date2->diff($date1)->format('%a');
                 if (isset($editMode) and $editMode == "true") {
                     echo
                     '<input type="text" name="nickname" placeholder="Nickname" value="' . $userInfo["nickname"] . '" class="form-input profile-input">
-                        <input type="text" name="nickname" placeholder="Nickname" value="' . $userInfo["username"] . '" class="form-input profile-input">
+                        <input type="text" name="username" placeholder="Nickname" value="' . $userInfo["username"] . '" class="form-input profile-input">
                         <textarea name="description" cols="30" rows="10" class="form-input profile-input">' . $userInfo["description"] . '</textarea>';
                 } else {
                     if ($userInfo["nickname"] !== null) {
@@ -101,8 +105,9 @@ $days  = $date2->diff($date1)->format('%a');
             <?php
             if (isset($_SESSION["username"]) and $_SESSION["username"] == $username) {
                 if (isset($editMode) and $editMode == "true") {
-                    echo '<div class="w-full flex justify-end items-start">
-                            <button class="button" name="submit">Save profile</a>
+                    echo '<div class="w-full flex justify-end items-start gap-2">
+                            <a class="button outline" href="?edit=false">Cancel</a>
+                            <button type="submit" class="button" name="submit">Save profile</button>
                         </div>';
                 } else {
                     echo '<div class="w-full flex justify-end items-start">
