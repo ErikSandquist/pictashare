@@ -51,13 +51,13 @@ function loginUser($conn, $username, $psw)
 function loadPicture($conn, $id, $sort, $userid, $tags)
 {
     if ($id != null) {
-        $sql = "SELECT picture FROM pictures WHERE id = ?";
+        $sql = "SELECT * FROM pictures WHERE id = ?";
         $var = $id;
     } elseif ($userid != null) {
-        $sql = "SELECT picture FROM pictures WHERE userid = ?";
+        $sql = "SELECT * FROM pictures WHERE userid = ?";
         $var = $userid;
     } elseif ($tags != null) {
-        $sql = "SELECT picture FROM pictures WHERE tags = ?";
+        $sql = "SELECT * FROM pictures WHERE tags = ?";
         $var = $tags;
     }
     if ($sort != null) {
@@ -65,7 +65,13 @@ function loadPicture($conn, $id, $sort, $userid, $tags)
     }
     $stmt = $conn->prepare($sql);
     $stmt->execute([$var]);
-    $image = $stmt->fetch()[0];
+    $row = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
 
-    return $image;
+    $stmt = null;
+
+    $sql = "UPDATE pictures SET views = views + 1 WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$row["id"]]);
+
+    return $row;
 }

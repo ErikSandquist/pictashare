@@ -878,6 +878,10 @@ html {
   width: 33.333333%;
 }
 
+.w-40 {
+  width: 10rem;
+}
+
 .w-6\/12 {
   width: 50%;
 }
@@ -902,8 +906,16 @@ html {
   width: 100%;
 }
 
-.w-40 {
-  width: 10rem;
+.w-96 {
+  width: 24rem;
+}
+
+.w-\[1000px\] {
+  width: 1000px;
+}
+
+.w-52 {
+  width: 13rem;
 }
 
 .min-w-\[420px\] {
@@ -960,6 +972,10 @@ html {
 
 .rounded-full {
   border-radius: 9999px;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
 }
 
 .rounded-t-2xl {
