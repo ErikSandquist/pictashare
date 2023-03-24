@@ -15,17 +15,27 @@ if (isset($_SESSION["user"])) {
     <link rel="stylesheet" href="/pictashare/output.css">
 </head>
 
+<nav class="fixed left-0 top-0 p-[10%]">
+    <a href="../">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+    </a>
+</nav>
+
 <body class="h-full flex items-center justify-center">
 
     <form action="../includes/login.php" method="post" class="flex flex-col w-60 h-full">
         <h1 class="text-5xl text-center mb-6">Login</h1>
         <label for="username">Username</label>
         <input type="text" name="username" id="" class="form-input">
-        <!-- <label for="email">Email</label>
-        <input type="email" name="email" id="" class="form-input"> -->
         <label for="psw">Password</label>
         <input type="password" name="psw" id="" class="form-input">
         <input type="submit" value="submit" name="submit" class="button submit form-input">
+        <div>
+            <a href="../signup">Sign up?</a>
+        </div>
     </form>
     <div class="w-6/12 h-screen flex items-center justify-center">
         <picture>

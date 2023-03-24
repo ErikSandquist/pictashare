@@ -76,18 +76,6 @@ body {
   @apply hidden;
 }
 
-.button.primary {
-  @apply bg-primary text-white;
-}
-
-.button.outline.primary {
-  @apply bg-transparent outline-primary text-primary;
-}
-
-.button.outline.primary:hover {
-  @apply bg-primary text-white;
-}
-
 .button.ghost {
   @apply bg-transparent text-white;
 }
@@ -105,7 +93,7 @@ body {
 }
 
 .submit {
-  @apply w-full bg-white border-none;
+  @apply w-full bg-white border-none text-black;
 }
 
 input:-webkit-autofill,
@@ -125,5 +113,25 @@ input:-webkit-autofill:active {
 }
 
 .file-upload:hover::after {
+  @apply opacity-100;
+}
+
+#imageBox {
+  @apply w-full;
+}
+
+#imageBox:has(img) {
+  @apply w-fit mx-auto h-fit min-h-fit;
+}
+
+#imageBox:has(img) div {
+  @apply h-fit min-h-fit;
+}
+
+#preview:has(img) div {
+  @apply opacity-0 transition-opacity duration-300;
+}
+
+#preview:hover:has(img) div {
   @apply opacity-100;
 }

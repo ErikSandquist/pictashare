@@ -47,3 +47,25 @@ function loginUser($conn, $username, $psw)
     $_SESSION["username"] = $userInfo["username"];
     $_SESSION["email"] = $userInfo["email"];
 }
+
+function loadPicture($conn, $id, $sort, $userid, $tags)
+{
+    if ($id != null) {
+        $sql = "SELECT picture FROM pictures WHERE id = ?";
+        $var = $id;
+    } elseif ($userid != null) {
+        $sql = "SELECT picture FROM pictures WHERE userid = ?";
+        $var = $userid;
+    } elseif ($tags != null) {
+        $sql = "SELECT picture FROM pictures WHERE tags = ?";
+        $var = $tags;
+    }
+    if ($sort != null) {
+        $sql = $sql . " ORDER BY createdate " . $sort;
+    }
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$var]);
+    $image = $stmt->fetch()[0];
+
+    return $image;
+}

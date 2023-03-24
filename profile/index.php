@@ -2,6 +2,7 @@
 
 include "../nav.php";
 
+// Figure out if the user is visiting their own profile or someone elses.
 if (isset($_GET["user"])) {
     $username = $_GET["user"];
 } elseif (isset($_SESSION["username"])) {
@@ -11,6 +12,7 @@ if (isset($_GET["user"])) {
     exit();
 }
 
+//Turns off edit mode if the user is not logged in to the profile they are visiting. If not then edit mode is disabled.
 if (isset($_GET["edit"]) and $_SESSION["username"] == $username) {
     $editMode = $_GET["edit"];
 } else {
@@ -20,17 +22,34 @@ if (isset($_GET["edit"]) and $_SESSION["username"] == $username) {
 require_once("../includes/db.php");
 require_once("../includes/functions.php");
 
+//Get the user's profile information using the username
 $userInfo = searchDb($conn, null, $username);
 
+//If the user information is not found then display the error message
 if ($userInfo === false) {
     header("Location:?error=notfound");
     exit();
 }
 
+//set the picture and banner which will be used according to if they have set another picture than the default. I do this in the code rather than having the default picture saved on every user minimizing the size of the database
+if ($userInfo["picture"] == null) {
+    $picture = '/pictashare/images/default/profile.svg';
+} else {
+    $picture = 'data:image/jpeg;base64,' . base64_encode($userInfo['picture']);
+}
+
+if ($userInfo["banner"] == null) {
+    $banner = '/pictashare/images/default/banner.jpg';
+} else {
+    $banner = 'data:image/jpeg;base64,' . base64_encode($userInfo['banner']);
+}
+
+//Just check if the error is notfound because then it shouldnt load the rest of the page, but if the error is other than that it should load the page with the error code on display for example: Username taken, when trying to change username in editmode
 if (isset($_GET["error"]) and $_GET["error"] == "notfound") {
     exit();
 }
 
+//Quick calculation on how "old" the user is, want this to be displayed on the profile as a "badge" of sorts
 $date1 = new DateTime($userInfo["createdate"]);
 $date2 = new DateTime(date("Y/m/d"));
 $days  = $date2->diff($date1)->format('%a');
@@ -47,39 +66,27 @@ $days  = $date2->diff($date1)->format('%a');
 </head>
 
 <body>
-    <main class="mt-40 w-[800px] mx-auto bg-base-200 rounded-3xl">
+    <main class="mt-40 w-[800px] mx-auto bg-base-200 rounded-2xl">
         <?php
         if (isset($editMode) and $editMode == "false") {
-            if ($userInfo["banner"] !== null) {
-                echo '<img src="data:image/jpeg;base64,' . base64_encode($userInfo['banner']) . '" alt="" class="w-full h-36 rounded-t-3xl object-cover">';
-            } else {
-                echo '<img src="/pictashare/images/default/banner.jpg" alt="" class="w-full h-36 rounded-t-3xl object-cover">';
-            }
-
-            if ($userInfo["picture"] !== null) {
-                echo '<img src="data:image/jpeg;base64,' . base64_encode($userInfo['picture']) . '" alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-16 ml-12 inline object-cover">';
-            } else {
-                echo '<img src="/pictashare/images/default/profile.svg" alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-16 ml-12 inline object-cover">';
-            }
+            echo '<img src=' . $banner . ' alt="" class="w-full h-36 rounded-t-2xl object-cover">
+                  <img src=' . $picture . ' alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-16 ml-12 inline object-cover">';
         } elseif (isset($editMode) and $editMode == "true") {
             echo '<form action="/pictashare/includes/saveprofile.php" method="post" enctype="multipart/form-data">';
+
             echo '<label class="cursor-pointer">
-            <input type="file" class="hidden" name="banner"/>';
-            if ($userInfo["banner"] !== null) {
-                echo '<div class="file-upload bg-base-200 w-full h-36 rounded-t-3xl overflow-hidden flex items-center"><img src="data:image/jpeg;base64,' . base64_encode($userInfo['banner']) . '" alt="" class="object-cover"></div>';
-            } else {
-                echo '<div class="file-upload bg-base-200 w-full h-36 rounded-t-3xl overflow-hidden flex items-center"><img src="/pictashare/images/default/banner.jpg" alt="" class="object-cover"></div>';
-            }
-            echo '</label>';
+                    <input type="file" class="hidden" name="banner"/>
+                    <div class="file-upload bg-base-200 w-full h-36 rounded-t-2xl overflow-hidden flex items-center">
+                        <img src=' . $banner . ' alt="" class="object-cover">
+                    </div>
+                 </label>';
 
             echo '<label class="h-32 w-32 -mt-16 ml-12 block relative cursor-pointer">
-                    <input type="file" class="hidden" name="picture"/>';
-            if ($userInfo["picture"] !== null) {
-                echo '<div class="file-upload rounded-full bg-base-200 p-2 overflow-hidden w-full h-full flex items-center"><img src="data:image/jpeg;base64,' . base64_encode($userInfo['picture']) . '" alt="" class="rounded-full"></div>';
-            } else {
-                echo '<div class="file-upload rounded-full bg-base-200 p-2 overflow-hidden w-full h-full flex items-center"><img src="/pictashare/images/default/profile.svg" alt="" class="rounded-full"></div>';
-            }
-            echo '</label>';
+                    <input type="file" class="hidden" name="picture"/>
+                    <div class="file-upload rounded-full bg-base-200 p-2 overflow-hidden w-full h-full flex items-center">
+                        <img src=' . $picture . ' alt="" class="rounded-full object-cover w-full h-full">
+                    </div>
+                 </label>';
         }
         ?>
         <div class="flex px-12 p-4">
@@ -110,9 +117,10 @@ $days  = $date2->diff($date1)->format('%a');
                             <button type="submit" class="button" name="submit">Save profile</button>
                         </div>';
                 } else {
-                    echo '<div class="w-full flex justify-end items-start">
-                    <a href="?edit=true" class="button outline">Edit profile</a>
-                </div>';
+                    echo '<div class="w-full flex justify-end items-start gap-2">
+                            <a href="?edit=true" class="button outline">Edit profile</a>
+                            <a class="button outline" href="../upload">Upload pictures</a>
+                        </div>';
                 }
             }
             ?>

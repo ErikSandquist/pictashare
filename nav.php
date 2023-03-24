@@ -17,9 +17,11 @@ session_start();
         </a>
     </div>
     <div class="flex h-fit gap-4">
-        <a href="gallery" class="button ghost">Gallery</a>
+        <a href="/pictashare/random" class="button ghost">Suprise me</a>
+        <a href="/pictashare/gallery" class="button ghost">Gallery</a>
         <?php
         if (isset($_SESSION['userid'])) {
+            echo '<a href="/pictashare/upload/" class="button outline">Upload</a>';
             echo '<a href="/pictashare/profile/?user=' . $_SESSION["username"] . '" class="button outline">Profile</a>';
         } else {
             echo '<a href="/pictashare/login" class="button outline">Login</a>
