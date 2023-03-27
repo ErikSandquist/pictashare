@@ -57,17 +57,19 @@ if (!isset($_POST["submit"])) : ?>
     <body class="mt-32">
         <main class="mt-40 w-[800px] mx-auto bg-base-200 rounded-2xl p-4">
             <h1 class="font-semibold text-3xl mb-4">Upload picture to gallery</h1>
-            <form action="" method="post" enctype="multipart/form-data" class="w-full flex flex-col justify-center mb-0">
+            <form action="" method="post" enctype="multipart/form-data" class="w-full flex flex-col justify-center mb-0" onkeydown="return event.key != 'Enter'">
                 <label for="image" id="imageBox" class="w-full h-auto block min-h-[400px] max-h-[500px] form-input profile-input relative p-0 overflow-hidden">
                     <div id="preview" class="w-full min-h-[400px] flex justify-center items-center">
                         <div class="w-full h-full absolute flex justify-center items-center">
                             <span class="form-input profile-input !border-white">Select file</span>
                         </div>
                     </div>
+                    <input type="file" name="image" id="image" class="hidden" accept"image/apng, image/avif, image/gif, image/jpeg, image/png, image/webp">
                 </label>
-                <input type="file" name="image" id="image" class="hidden">
                 <textarea name="description" cols="30" rows="3" placeholder="Description" class="form-input profile-input w-full"></textarea>
-                <input type="text" name="tags" placeholder="Tags (separated by commas)" class="form-input profile-input w-full">
+                <input type="text" name="" id="tags" placeholder="Tags, press enter to add" class="form-input profile-input w-full" autocomplete="off">
+                <input type="text" name="tags" id="hiddenInput" class="hidden">
+                <div class="tag-container flex gap-2"></div>
                 <button type="submit" name="submit" class="button mx-auto">Submit</button>
             </form>
         </main>
@@ -87,7 +89,40 @@ if (!isset($_POST["submit"])) : ?>
             fileReader.readAsDataURL(fileInput.files[0]);
         }
     }
+
     $("#image").change(function() {
         imagePreview(this);
+    });
+
+    let input, hashtagArray, container, t;
+
+    input = document.querySelector('#tags');
+    hiddenInput = document.querySelector('#hiddenInput');
+    container = document.querySelector('.tag-container');
+    hashtagArray = [];
+
+    input.addEventListener('keyup', () => {
+        if (event.which == 13 && input.value.length > 0) {
+            event.preventDefault();
+            var text = document.createTextNode(input.value);
+            var p = document.createElement('p');
+            hashtagArray.push(text["wholeText"]);
+            container.appendChild(p);
+            p.appendChild(text);
+            p.classList.add('tag');
+            input.value = '';
+
+            let deleteTags = document.querySelectorAll('.tag');
+
+            for (let i = 0; i < deleteTags.length; i++) {
+                deleteTags[i].addEventListener('click', () => {
+                    container.removeChild(deleteTags[i]);
+                    hashtagArray.splice(i, 1);
+                    hiddenInput.value = JSON.stringify(hashtagArray);
+                });
+            }
+            hiddenInput.value = JSON.stringify(hashtagArray);
+        }
+
     });
 </script>

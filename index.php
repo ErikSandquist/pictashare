@@ -26,7 +26,7 @@ include "nav.php"
     <section class="w-full h-full flex z-10 gap-40">
         <div class="flex flex-col justify-center pl-40 gap-4">
             <h1 class="text-6xl font-semibold">A new way of sharing pictures</h1>
-            <p class="text-2xl font-light">Start today and begin sharing all your photos with just a simple click
+            <p class="text-2xl font-light">Start today and begin sharing all your photos with just a simple click.
                 Scroll endlessly and comment on your favorites. Upvote them and see what post gets to the top</p>
             <div class="flex gap-4">
                 <a href="gallery" class="button">Scroll the gallery</a>

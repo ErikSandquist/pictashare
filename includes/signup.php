@@ -7,10 +7,10 @@ if (isset($_POST["submit"])) {
     require_once "db.php";
     require_once "functions.php";
 
-    if (searchDb($conn, $email, null) !== false) {
+    if (searchDb($conn, $email, null, null) !== false) {
         header("Location: ../signup?error=emailinuse");
         exit();
-    } elseif (searchDb($conn, null, $username) !== false) {
+    } elseif (searchDb($conn, null, $username, null) !== false) {
         header("Location: ../signup?error=usernameinuse");
         exit();
     }

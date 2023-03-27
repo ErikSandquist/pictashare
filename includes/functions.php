@@ -1,6 +1,6 @@
 <?php
 
-function searchDb($conn, $email, $username)
+function searchDb($conn, $email, $username, $userId)
 {
     if ($email) {
         $sql = "SELECT * FROM users WHERE email = ?";
@@ -8,6 +8,9 @@ function searchDb($conn, $email, $username)
     } elseif ($username) {
         $sql = "SELECT * FROM users WHERE username = ?";
         $var = $username;
+    } elseif ($userId) {
+        $sql = "SELECT * FROM users WHERE id = ?";
+        $var = $userId;
     }
 
     $stmt = $conn->prepare($sql);
@@ -28,7 +31,7 @@ function searchDb($conn, $email, $username)
 
 function loginUser($conn, $username, $psw)
 {
-    $userInfo = searchDb($conn, null, $username);
+    $userInfo = searchDb($conn, null, $username, null);
 
     if ($userInfo === false) {
         header("Location: ../login?error=notfound");

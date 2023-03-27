@@ -23,7 +23,7 @@ require_once("../includes/db.php");
 require_once("../includes/functions.php");
 
 //Get the user's profile information using the username
-$userInfo = searchDb($conn, null, $username);
+$userInfo = searchDb($conn, null, $username, null);
 
 //If the user information is not found then display the error message
 if ($userInfo === false) {
@@ -75,15 +75,15 @@ $days  = $date2->diff($date1)->format('%a');
             echo '<form action="/pictashare/includes/saveprofile.php" method="post" enctype="multipart/form-data">';
 
             echo '<label class="cursor-pointer">
-                    <input type="file" class="hidden" name="banner"/>
-                    <div class="file-upload bg-base-200 w-full h-36 rounded-t-2xl overflow-hidden flex items-center">
+                    <input type="file" class="hidden" name="banner" id="image1" accept"image/apng, image/avif, image/gif, image/jpeg, image/png, image/webp"/>
+                    <div id="preview1" class="file-upload bg-base-200 w-full h-36 rounded-t-2xl overflow-hidden flex items-center">
                         <img src=' . $banner . ' alt="" class="object-cover">
                     </div>
                  </label>';
 
             echo '<label class="h-32 w-32 -mt-16 ml-12 block relative cursor-pointer">
-                    <input type="file" class="hidden" name="picture"/>
-                    <div class="file-upload rounded-full bg-base-200 p-2 overflow-hidden w-full h-full flex items-center">
+                    <input type="file" class="hidden" name="picture" id="image2" accept"image/apng, image/avif, image/gif, image/jpeg, image/png, image/webp"/>
+                    <div id="preview2" class="file-upload rounded-full bg-base-200 p-2 overflow-hidden w-full h-full flex items-center">
                         <img src=' . $picture . ' alt="" class="rounded-full object-cover w-full h-full">
                     </div>
                  </label>';
@@ -160,3 +160,29 @@ $days  = $date2->diff($date1)->format('%a');
 </body>
 
 </html>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script>
+    function imagePreview(fileInput, number) {
+        if (fileInput.files && fileInput.files[0]) {
+            var fileReader = new FileReader();
+            if (number == 1) {
+                fileReader.onload = function(event) {
+                    $('#preview1').html('<img src="' + event.target.result + '" class="object-cover"/>');
+                };
+            } else {
+                fileReader.onload = function(event) {
+                    $('#preview2').html('<img src="' + event.target.result + '" class="rounded-full object-cover w-full h-full"/>');
+                };
+            }
+
+            fileReader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+
+    $("#image1").change(function() {
+        imagePreview(this, 1);
+    });
+    $("#image2").change(function() {
+        imagePreview(this, 2);
+    });
+</script>

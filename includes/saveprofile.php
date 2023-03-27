@@ -30,7 +30,7 @@ if (isset($_POST["submit"])) {
 
     function updateProfile($conn, $userid, $banner, $picture, $nickname, $username, $description)
     {
-        $userInfo = searchDb($conn, null, $username);
+        $userInfo = searchDb($conn, null, $username, null);
 
         if ($userInfo != false and $username != $_SESSION["username"]) {
             header("Location:../profile/?error=usernametaken&edit=true");

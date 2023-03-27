@@ -135,3 +135,13 @@ input:-webkit-autofill:active {
 #preview:hover:has(img) div {
   @apply opacity-100;
 }
+
+.tag-container p {
+  @apply py-1 px-2 bg-base-100 rounded-lg cursor-pointer text-sm -mt-2 flex items-center;
+}
+
+.tag-container p::before {
+  content: "";
+  background-image: url(/pictashare/images/x.svg);
+  @apply w-4 h-4 block bg-cover;
+}
