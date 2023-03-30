@@ -1,5 +1,5 @@
 <?php
-include '../includes/db.php';
+require_once '../includes/db.php';
 
 $start = $_GET["start"];
 $limit = $_GET["limit"];
@@ -15,7 +15,7 @@ foreach ($results as $row) {
     $imageData = base64_encode($row['picture']);
     $src = 'data:image/jpeg;base64,' . $imageData;
     $id = $row['id'];
-    $item = '<div class="item"><a href="../image.php?id=' . $id . '"><img src="' . $src . '"></a></div>';
+    $item = '<div class="item"><a href="../image/?id=' . $id . '"><img src="' . $src . '"></a></div>';
     array_push($items, $item);
 }
 

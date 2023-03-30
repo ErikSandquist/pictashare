@@ -7,7 +7,6 @@ $sql = "SELECT * FROM pictures ORDER BY createdate DESC";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $pictures = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 
 <!DOCTYPE html>
@@ -20,23 +19,23 @@ $pictures = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Gallery</title>
 </head>
 
-<body>
-    <?php
-    foreach ($pictures as $image) {
-        echo '<img src="data:image/jpeg;base64,' . base64_encode($image["picture"]) . '" alt="" class="w-40 h-40">';
-    }
-    ?>
-    <div id="container"></div>
+<body class="mt-32">
+    <div class="flex w-full gap-8 p-4">
+        <div class="container w-full flex flex-col gap-8"></div>
+        <div class="container w-full flex flex-col gap-8"></div>
+        <div class="container w-full flex flex-col gap-8"></div>
+    </div>
     <button id="load-more">Load More</button>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
-        var container = $('#container');
+        var containers = $('.container');
         var loadMore = $('#load-more');
         var isLoading = false;
         var start = 0;
-        var limit = 2;
+        var limit = 4;
+
         loadMore.click(function() {
             if (!isLoading) {
                 isLoading = true;
@@ -44,6 +43,7 @@ $pictures = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     start: start,
                     limit: limit
                 };
+                start += limit;
                 $.ajax({
                     url: 'get-data.php',
                     type: 'GET',
@@ -51,18 +51,25 @@ $pictures = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     dataType: 'json',
                     success: function(response) {
                         $.each(response, function(index, item) {
-
-                            container.append(item);
+                            var shortestContainer = containers.eq(0);
+                            containers.each(function() {
+                                if ($(this).height() < shortestContainer.height()) {
+                                    shortestContainer = $(this);
+                                }
+                            });
+                            shortestContainer += item;
                         });
-                        start += limit;
                         isLoading = false;
                     },
-                    error: function(xhr, status, error) {
+                    error: function(xhr, textStatus, error) {
                         console.log(xhr.responseText);
-                        console.log(status);
+                        console.log(xhr.statusText);
+                        console.log(textStatus);
                         console.log(error);
                     }
+
                 });
+
             }
         });
     });
