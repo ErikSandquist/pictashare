@@ -145,3 +145,7 @@ input:-webkit-autofill:active {
   background-image: url(/pictashare/images/x.svg);
   @apply w-4 h-4 block bg-cover;
 }
+
+.gallery-image {
+  min-height: 10px;
+}

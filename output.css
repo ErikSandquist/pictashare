@@ -806,8 +806,8 @@ html {
   z-index: 10;
 }
 
-.m-2 {
-  margin: 0.5rem;
+.m-auto {
+  margin: auto;
 }
 
 .mx-auto {
@@ -863,6 +863,10 @@ html {
   display: flex;
 }
 
+.contents {
+  display: contents;
+}
+
 .hidden {
   display: none;
 }
@@ -877,10 +881,6 @@ html {
 
 .h-36 {
   height: 9rem;
-}
-
-.h-40 {
-  height: 10rem;
 }
 
 .h-auto {
@@ -922,10 +922,6 @@ html {
 
 .w-4\/12 {
   width: 33.333333%;
-}
-
-.w-40 {
-  width: 10rem;
 }
 
 .w-6\/12 {
@@ -1066,8 +1062,21 @@ html {
   padding-right: 10rem;
 }
 
+.py-32 {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
 .pl-40 {
   padding-left: 10rem;
+}
+
+.pb-8 {
+  padding-bottom: 2rem;
+}
+
+.pt-32 {
+  padding-top: 8rem;
 }
 
 .text-center {
@@ -1390,4 +1399,8 @@ input:-webkit-autofill:active {
   height: 1rem;
   width: 1rem;
   background-size: cover;
+}
+
+.gallery-image {
+  min-height: 10px;
 }

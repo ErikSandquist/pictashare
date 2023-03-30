@@ -8,8 +8,18 @@ if (isset($_POST["submit"])) {
     if ($_FILES["image"]["name"] != "") {
         $image = $_FILES["image"];
 
-        $image = $image['tmp_name'];
-        $image = file_get_contents($image);
+        // get the file extension
+        $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+
+        // check if the file is an image
+        if (in_array(strtolower($ext), array('jpg', 'jpeg', 'png', 'gif', 'avif', 'webp'))) {
+            // read the file contents
+            $image = $image['tmp_name'];
+            $image = file_get_contents($image);
+        } else {
+            header("Location:?error=invalidimage");
+            exit();
+        }
     } else {
         header("Location:?error=noimage");
         exit();

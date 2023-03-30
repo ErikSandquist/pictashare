@@ -19,59 +19,67 @@ $pictures = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Gallery</title>
 </head>
 
-<body class="mt-32">
+<body class="pt-32 pb-8">
     <div class="flex w-full gap-8 p-4">
-        <div class="container w-full flex flex-col gap-8"></div>
-        <div class="container w-full flex flex-col gap-8"></div>
-        <div class="container w-full flex flex-col gap-8"></div>
+        <div class="container 1 w-full flex flex-col gap-8 h-fit"></div>
+        <div class="container 2 w-full flex flex-col gap-8 h-fit"></div>
+        <div class="container 3 w-full flex flex-col gap-8 h-fit"></div>
     </div>
-    <button id="load-more">Load More</button>
+    <div class="flex justify-center items-center w-full mt-4">
+        <button id="load-more" class="button">Load More</button>
+    </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
         var containers = $('.container');
-        var loadMore = $('#load-more');
+        var button = $('#load-more');
         var isLoading = false;
         var start = 0;
-        var limit = 4;
+        var limit = 1;
 
-        loadMore.click(function() {
+        button.click(loadMore);
+
+        async function loadMore() {
             if (!isLoading) {
                 isLoading = true;
-                var data = {
-                    start: start,
-                    limit: limit
-                };
-                start += limit;
-                $.ajax({
-                    url: 'get-data.php',
-                    type: 'GET',
-                    data: data,
-                    dataType: 'json',
-                    success: function(response) {
+                for (var i = 0; i < 16; i++) {
+                    var data = {
+                        start: start,
+                        limit: limit
+                    };
+                    start += limit;
+                    try {
+                        var response = await $.ajax({
+                            url: 'get-data.php',
+                            type: 'GET',
+                            data: data,
+                            dataType: 'json'
+                        });
+                        var shortestContainer;
+                        var shortestHeight = Infinity;
                         $.each(response, function(index, item) {
-                            var shortestContainer = containers.eq(0);
                             containers.each(function() {
-                                if ($(this).height() < shortestContainer.height()) {
+                                var height = $(this).height();
+                                console.log(height);
+
+                                if (height < shortestHeight) {
                                     shortestContainer = $(this);
+                                    shortestHeight = height;
                                 }
                             });
-                            shortestContainer += item;
+
+                            shortestContainer.append(item);
+                            console.log(shortestContainer);
                         });
-                        isLoading = false;
-                    },
-                    error: function(xhr, textStatus, error) {
-                        console.log(xhr.responseText);
-                        console.log(xhr.statusText);
-                        console.log(textStatus);
+                    } catch (error) {
                         console.log(error);
                     }
-
-                });
-
+                }
+                isLoading = false;
             }
-        });
+        };
+        loadMore();
     });
 </script>
 

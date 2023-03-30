@@ -15,7 +15,7 @@ foreach ($results as $row) {
     $imageData = base64_encode($row['picture']);
     $src = 'data:image/jpeg;base64,' . $imageData;
     $id = $row['id'];
-    $item = '<div class="item"><a href="../image/?id=' . $id . '"><img src="' . $src . '"></a></div>';
+    $item = '<div class="item"><a href="../image/?id=' . $id . '"><img class="gallery-image w-full h-auto" src="' . $src . '"></a></div>';
     array_push($items, $item);
 }
 
