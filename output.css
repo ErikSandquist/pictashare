@@ -794,6 +794,18 @@ html {
   top: 0px;
 }
 
+.-left-8 {
+  left: -2rem;
+}
+
+.-left-12 {
+  left: -3rem;
+}
+
+.-left-10 {
+  left: -2.5rem;
+}
+
 .-z-10 {
   z-index: -10;
 }
@@ -804,10 +816,6 @@ html {
 
 .z-10 {
   z-index: 10;
-}
-
-.m-auto {
-  margin: auto;
 }
 
 .mx-auto {
@@ -900,6 +908,14 @@ html {
   height: 100vh;
 }
 
+.h-16 {
+  height: 4rem;
+}
+
+.h-20 {
+  height: 5rem;
+}
+
 .max-h-\[500px\] {
   max-height: 500px;
 }
@@ -952,6 +968,14 @@ html {
   width: 100%;
 }
 
+.w-8 {
+  width: 2rem;
+}
+
+.w-10 {
+  width: 2.5rem;
+}
+
 .min-w-\[420px\] {
   min-width: 420px;
 }
@@ -982,6 +1006,14 @@ html {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
 }
 
 .gap-2 {
@@ -1015,6 +1047,15 @@ html {
 .rounded-t-2xl {
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
+}
+
+.rounded-l-2xl {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.rounded-tl-none {
+  border-top-left-radius: 0px;
 }
 
 .\!border-white {
@@ -1062,21 +1103,24 @@ html {
   padding-right: 10rem;
 }
 
-.py-32 {
-  padding-top: 8rem;
-  padding-bottom: 8rem;
+.pb-8 {
+  padding-bottom: 2rem;
 }
 
 .pl-40 {
   padding-left: 10rem;
 }
 
-.pb-8 {
-  padding-bottom: 2rem;
-}
-
 .pt-32 {
   padding-top: 8rem;
+}
+
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
+.pl-\[2px\] {
+  padding-left: 2px;
 }
 
 .text-center {
@@ -1147,6 +1191,16 @@ html {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.duration-200 {
+  transition-duration: 200ms;
 }
 
 body {
@@ -1403,4 +1457,8 @@ input:-webkit-autofill:active {
 
 .gallery-image {
   min-height: 10px;
+}
+
+.hover\:stroke-\[3px\]:hover {
+  stroke-width: 3px;
 }
