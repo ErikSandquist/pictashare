@@ -5,7 +5,7 @@ session_start();
 <head>
     <link rel="stylesheet" href="/pictashare/output.css">
 </head>
-<nav class="z-10 fixed top-0 left-0 w-full h-32 flex justify-between p-8 px-40 items-center">
+<nav class="z-10 fixed top-0 left-0 w-full h-32 flex justify-between p-8 px-40 items-center backdrop-blur-xl">
     <div class="text-7xl">
         <a href="/pictashare" class="flex gap-4 items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ; transition: 0.3s;">

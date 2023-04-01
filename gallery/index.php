@@ -43,7 +43,7 @@ $pictures = $stmt->fetchAll(PDO::FETCH_ASSOC);
         async function loadMore() {
             if (!isLoading) {
                 isLoading = true;
-                for (var i = 0; i < 16; i++) {
+                for (var i = 0; i < 12; i++) {
                     var data = {
                         start: start,
                         limit: limit

@@ -133,6 +133,5 @@ if (!isset($_POST["submit"])) : ?>
             }
             hiddenInput.value = JSON.stringify(hashtagArray);
         }
-
     });
 </script>
