@@ -17,10 +17,10 @@ function searchDb($conn, $email, $username, $userId)
 
     $stmt->execute([$var]);
 
-    $row = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+    $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if ($row) {
-        return $row;
+        return $row[0];
     } else {
         return false;
     }

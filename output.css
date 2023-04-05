@@ -875,6 +875,10 @@ html {
   height: 3rem;
 }
 
+.h-14 {
+  height: 3.5rem;
+}
+
 .h-32 {
   height: 8rem;
 }
@@ -916,12 +920,20 @@ html {
   width: 3rem;
 }
 
+.w-14 {
+  width: 3.5rem;
+}
+
 .w-32 {
   width: 8rem;
 }
 
 .w-4\/12 {
   width: 33.333333%;
+}
+
+.w-52 {
+  width: 13rem;
 }
 
 .w-6\/12 {
@@ -1012,14 +1024,29 @@ html {
   border-radius: 9999px;
 }
 
+.rounded-b-lg {
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
 .rounded-t-2xl {
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
 }
 
+.rounded-t-lg {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
 .\!border-white {
   --tw-border-opacity: 1 !important;
   border-color: rgb(255 255 255 / var(--tw-border-opacity)) !important;
+}
+
+.bg-base-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(53 57 59 / var(--tw-bg-opacity));
 }
 
 .bg-base-200 {
@@ -1111,6 +1138,11 @@ html {
   line-height: 1;
 }
 
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -1130,6 +1162,12 @@ html {
 
 .opacity-60 {
   opacity: 0.6;
+}
+
+.shadow {
+  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .outline {
@@ -1408,4 +1446,55 @@ input:-webkit-autofill:active {
 
 .gallery-image {
   min-height: 10px;
+}
+
+/* Detta är en dropdown meny tagen från open source projektet daisy ui, orkade inte fixa javascript för att använda en så dennna fungerar via focus i css */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown > *:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.dropdown .dropdown-content {
+  visibility: hidden;
+  position: absolute;
+  z-index: 50;
+  opacity: 0;
+}
+
+.dropdown-end .dropdown-content {
+  right: 0px;
+}
+
+.dropdown.dropdown-open .dropdown-content,
+.dropdown.dropdown-hover:hover .dropdown-content,
+.dropdown:not(.dropdown-hover):focus .dropdown-content,
+.dropdown:not(.dropdown-hover):focus-within .dropdown-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* slut av stjälning */
+
+.dropdown-content {
+  border-radius: 0.5rem;
+}
+
+.dropdown-content li {
+  padding: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+.dropdown-content li:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(42 45 46 / var(--tw-bg-opacity));
 }

@@ -149,3 +149,36 @@ input:-webkit-autofill:active {
 .gallery-image {
   min-height: 10px;
 }
+
+/* Detta är en dropdown meny tagen från open source projektet daisy ui, orkade inte fixa javascript för att använda en så dennna fungerar via focus i css */
+.dropdown {
+  @apply relative inline-block;
+}
+
+.dropdown > *:focus {
+  @apply outline-none;
+}
+
+.dropdown .dropdown-content {
+  @apply invisible absolute z-50 opacity-0;
+}
+
+.dropdown-end .dropdown-content {
+  @apply right-0;
+}
+
+.dropdown.dropdown-open .dropdown-content,
+.dropdown.dropdown-hover:hover .dropdown-content,
+.dropdown:not(.dropdown-hover):focus .dropdown-content,
+.dropdown:not(.dropdown-hover):focus-within .dropdown-content {
+  @apply visible opacity-100;
+}
+/* slut av stjälning */
+
+.dropdown-content {
+  @apply rounded-lg;
+}
+
+.dropdown-content li {
+  @apply hover:bg-base-200 transition-colors duration-200 p-2 px-3;
+}

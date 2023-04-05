@@ -1,5 +1,21 @@
 <?php
 session_start();
+
+if (isset($_SESSION["username"])) {
+
+    require_once("includes/db.php");
+    require_once("includes/functions.php");
+
+    $userInfo = searchDb($conn, null, $_SESSION["username"], null);
+
+    if ($userInfo["picture"] == null) {
+        $picture = '/pictashare/images/default/profile.svg';
+    } else {
+        $picture = 'data:image/jpeg;base64,' . base64_encode($userInfo['picture']);
+    }
+}
+
+ob_start();
 ?>
 
 <head>
@@ -16,17 +32,33 @@ session_start();
             Pictashare
         </a>
     </div>
-    <div class="flex h-fit gap-4">
-        <a href="/pictashare/random" class="button ghost">Suprise me</a>
+    <div class="flex items-center h-fit gap-4">
         <a href="/pictashare/gallery" class="button ghost">Gallery</a>
         <?php
-        if (isset($_SESSION['userid'])) {
-            echo '<a href="/pictashare/upload/" class="button outline">Upload</a>';
-            echo '<a href="/pictashare/profile/?user=' . $_SESSION["username"] . '" class="button outline">Profile</a>';
-        } else {
-            echo '<a href="/pictashare/login" class="button outline">Login</a>
-                <a href="/pictashare/signup" class="button">Sign up</a>';
-        }
-        ?>
+        if (isset($_SESSION['userid'])) : ?>
+            <a href="/pictashare/upload/" class="button outline">Upload</a>
+            <div class="dropdown dropdown-end">
+                <label tabindex="0"> <img src='<?php echo $picture ?>' alt="" class="h-14 w-14 rounded-full object-cover bg-base-200"></label>
+                <ul tabindex="0" class="dropdown-content shadow bg-base-100 rounded-box w-52 mt-4 text-lg flex flex-col">
+                    <a href="/pictashare/profile/?user=<?php echo $_SESSION["username"] ?>">
+                        <li class="rounded-t-lg">Profile</li>
+                    </a>
+                    <a href="/pictashare/random">
+                        <li>Suprise me</li>
+                    </a>
+                    <?php if ($userInfo["admin"] == 1) : ?>
+                        <a href="/pictashare/admin">
+                            <li>Admin page</li>
+                        </a>
+                    <?php endif; ?>
+                    <a href="/pictashare/logout">
+                        <li class="rounded-b-lg">Log out</li>
+                    </a>
+                </ul>
+            </div>
+        <?php else : ?>
+            <a href="/pictashare/login" class="button outline">Login</a>
+            <a href="/pictashare/signup" class="button">Sign up</a>
+        <?php endif; ?>
     </div>
 </nav>

@@ -1,5 +1,4 @@
 <?php
-
 include "../nav.php";
 
 // Figure out if the user is visiting their own profile or someone elses.
@@ -53,6 +52,7 @@ if (isset($_GET["error"]) and $_GET["error"] == "notfound") {
 $date1 = new DateTime($userInfo["createdate"]);
 $date2 = new DateTime(date("Y/m/d"));
 $days  = $date2->diff($date1)->format('%a');
+
 ?>
 
 <!DOCTYPE html>
