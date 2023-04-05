@@ -770,10 +770,6 @@ html {
   padding-bottom: 0;
 }
 
-.static {
-  position: static;
-}
-
 .fixed {
   position: fixed;
 }
@@ -796,6 +792,18 @@ html {
 
 .top-0 {
   top: 0px;
+}
+
+.-left-8 {
+  left: -2rem;
+}
+
+.-left-12 {
+  left: -3rem;
+}
+
+.-left-10 {
+  left: -2.5rem;
 }
 
 .-z-10 {
@@ -904,6 +912,14 @@ html {
   height: 100vh;
 }
 
+.h-16 {
+  height: 4rem;
+}
+
+.h-20 {
+  height: 5rem;
+}
+
 .max-h-\[500px\] {
   max-height: 500px;
 }
@@ -964,6 +980,14 @@ html {
   width: 100%;
 }
 
+.w-8 {
+  width: 2rem;
+}
+
+.w-10 {
+  width: 2.5rem;
+}
+
 .min-w-\[420px\] {
   min-width: 420px;
 }
@@ -994,6 +1018,14 @@ html {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
 }
 
 .gap-2 {
@@ -1034,9 +1066,19 @@ html {
   border-top-right-radius: 1rem;
 }
 
+<<<<<<< HEAD
 .rounded-t-lg {
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
+=======
+.rounded-l-2xl {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.rounded-tl-none {
+  border-top-left-radius: 0px;
+>>>>>>> cc842ea2fba5f214e17360a0d717c85c226b2029
 }
 
 .\!border-white {
@@ -1099,6 +1141,14 @@ html {
 
 .pt-32 {
   padding-top: 8rem;
+}
+
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
+.pl-\[2px\] {
+  padding-left: 2px;
 }
 
 .text-center {
@@ -1174,12 +1224,6 @@ html {
   outline-style: solid;
 }
 
-.backdrop-blur-xl {
-  --tw-backdrop-blur: blur(24px);
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-          backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-}
-
 .transition {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
@@ -1188,8 +1232,14 @@ html {
   transition-duration: 150ms;
 }
 
-.\[hostname\:port\] {
-  hostname: port;
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.duration-200 {
+  transition-duration: 200ms;
 }
 
 body {
@@ -1448,6 +1498,7 @@ input:-webkit-autofill:active {
   min-height: 10px;
 }
 
+<<<<<<< HEAD
 /* Detta är en dropdown meny tagen från open source projektet daisy ui, orkade inte fixa javascript för att använda en så dennna fungerar via focus i css */
 
 .dropdown {
@@ -1497,4 +1548,8 @@ input:-webkit-autofill:active {
 .dropdown-content li:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(42 45 46 / var(--tw-bg-opacity));
+=======
+.hover\:stroke-\[3px\]:hover {
+  stroke-width: 3px;
+>>>>>>> cc842ea2fba5f214e17360a0d717c85c226b2029
 }
