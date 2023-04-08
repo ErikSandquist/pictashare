@@ -182,3 +182,27 @@ input:-webkit-autofill:active {
 .dropdown-content li {
   @apply hover:bg-base-200 transition-colors duration-200 p-2 px-3;
 }
+
+.admintable tr {
+  @apply even:bg-base-200;
+}
+
+.admintable td {
+  @apply h-16 border-white border-[1px] border-x-base-100 px-1 max-w-sm overflow-x-auto;
+}
+
+.adminnav a {
+  @apply p-4 bg-base-200 hover:bg-base-100 transition-colors duration-200;
+}
+
+.voted svg {
+  @apply stroke-[3px];
+}
+
+.voted#upvote svg {
+  @apply stroke-green-600;
+}
+
+.voted#downvote svg {
+  @apply stroke-red-600;
+}

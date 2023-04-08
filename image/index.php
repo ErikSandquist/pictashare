@@ -22,7 +22,7 @@ $tags = explode(",", $imageTagsString);
 
 <main class="mt-40 w-[1000px] mx-auto rounded-2xl flex flex-col p-4 gap-8">
     <div class="flex gap-8 relative">
-        <div class="flex flex-col gap-4 w-full h-auto">
+        <div class="flex flex-col gap-4 w-full h-auto bg-base-200 rounded-2xl rounded-tl-none justify-center">
             <div class="absolute top-0 -left-10 bg-base-200 w-10 h-20 flex flex-col items-center justify-around rounded-l-2xl pl-[2px]">
                 <div id="upvote" onclick="vote(1)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hover:stroke-[3px] transition-all duration-200 cursor-pointer">
@@ -35,9 +35,9 @@ $tags = explode(",", $imageTagsString);
                     </svg>
                 </div>
             </div>
-            <img src=" <?php echo 'data:image/jpeg;base64,' . base64_encode($imageInfo["picture"]); ?>" alt="" class="w-full h-auto rounded-2xl rounded-tl-none min-h-[300px] object-cover bg-base-200">
+            <img src=" <?php echo 'data:image/jpeg;base64,' . base64_encode($imageInfo["picture"]); ?>" alt="" class="w-full h-auto rounded-2xl rounded-tl-none bg-base-200">
         </div>
-        <div class="w-6/12 h-inherit bg-base-200 rounded-2xl p-4 flex flex-col">
+        <div class="w-6/12 h-inherit bg-base-200 rounded-2xl p-4 flex flex-col min-h-[250px]">
             <div class="flex gap-2 text-xl leading-4 tag-container">
                 <?php
                 echo '<img src=' . $picture . ' alt="" class="rounded-full object-cover w-12 h-12">';
@@ -59,6 +59,8 @@ $tags = explode(",", $imageTagsString);
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const pictureid = urlParams.get('id');
+    const upVote = document.getElementById('upvote');
+    const downVote = document.getElementById('downvote');
 
     function vote(type) {
         $.ajax({
@@ -69,11 +71,21 @@ $tags = explode(",", $imageTagsString);
                 type: type
             },
             success: function(data) {
-                console.log(data);
+                if (data == "") {
+                    console.log("vote not found");
+                } else if (data == 1) {
+                    upVote.classList.add("voted");
+                    downVote.classList.remove("voted");
+                } else if (data == 0) {
+                    downVote.classList.add("voted");
+                    upVote.classList.remove("voted");
+                }
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Request failed. Status: ' + textStatus + ', error thrown: ' + errorThrown);
             }
         });
     }
+
+    vote(null)
 </script>

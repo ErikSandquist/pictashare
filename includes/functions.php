@@ -49,6 +49,7 @@ function loginUser($conn, $username, $psw)
     $_SESSION["userid"] = $userInfo["id"];
     $_SESSION["username"] = $userInfo["username"];
     $_SESSION["email"] = $userInfo["email"];
+    $_SESSION["admin"] = $userInfo["admin"];
 }
 
 function loadPicture($conn, $id, $sort, $userid, $tags)

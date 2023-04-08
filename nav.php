@@ -38,7 +38,7 @@ ob_start();
         if (isset($_SESSION['userid'])) : ?>
             <a href="/pictashare/upload/" class="button outline">Upload</a>
             <div class="dropdown dropdown-end">
-                <label tabindex="0"> <img src='<?php echo $picture ?>' alt="" class="h-14 w-14 rounded-full object-cover bg-base-200"></label>
+                <label tabindex="0"> <img src='<?php echo $picture ?>' alt="" class="h-14 w-14 rounded-full object-cover bg-base-200 cursor-pointer"></label>
                 <ul tabindex="0" class="dropdown-content shadow bg-base-100 rounded-box w-52 mt-4 text-lg flex flex-col">
                     <a href="/pictashare/profile/?user=<?php echo $_SESSION["username"] ?>">
                         <li class="rounded-t-lg">Profile</li>
@@ -46,12 +46,12 @@ ob_start();
                     <a href="/pictashare/random">
                         <li>Suprise me</li>
                     </a>
-                    <?php if ($userInfo["admin"] == 1) : ?>
+                    <?php if ($_SESSION["admin"] == 1) : ?>
                         <a href="/pictashare/admin">
                             <li>Admin page</li>
                         </a>
                     <?php endif; ?>
-                    <a href="/pictashare/logout">
+                    <a onclick="modal()" class="cursor-pointer">
                         <li class="rounded-b-lg">Log out</li>
                     </a>
                 </ul>
@@ -62,3 +62,31 @@ ob_start();
         <?php endif; ?>
     </div>
 </nav>
+
+<div class="fixed w-full h-full top-0 left-0 justify-center items-center bg-base-300 bg-opacity-50 z-50 hidden" id="modal">
+    <div class="w-96 h-48 bg-base-200 rounded-2xl p-4 flex flex-col justify-between">
+        <div>
+            <h2 class="text-xl font-bold mb-1">Are you sure you want to log out?</h2>
+            <p class="text-sm opacity-80">You will be required to enter your information again to access the account</p>
+        </div>
+        <div class="w-full flex justify-end gap-2">
+            <a onclick="modal()" class="bg-base-100 px-4 py-2 rounded-lg cursor-pointer hover:bg-opacity-50 transition-colors duration-200">No, stay</a>
+            <a href="/pictashare/logout" class="bg-error text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200">Log out</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    let showModal = false;
+    let modalButton = document.getElementById("modal");
+
+    function modal() {
+        if (showModal == false) {
+            modalButton.style.display = "flex";
+            showModal = true;
+        } else {
+            modalButton.style.display = "none";
+            showModal = false;
+        }
+    }
+</script>
