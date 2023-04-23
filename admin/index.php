@@ -76,13 +76,16 @@ $stmt = null;
             <div class="value" number="<?php echo $votesCount; ?>">0</div>
         </div>
     </div>
+    <div>
+        Reports
+    </div>
 </body>
 
 </html>
 
 <script>
     const counters = document.querySelectorAll('.value');
-    const speed = 1000;
+    const speed = 10000;
 
     function animate() {
         counters.forEach(counter => {

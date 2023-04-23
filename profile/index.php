@@ -130,7 +130,7 @@ $days  = $date2->diff($date1)->format('%a');
             } ?>
 
         </div>
-        <div class="flex w-full gap-8 p-4">
+        <div class="flex w-full gap-4 p-4">
             <div class="container 1 w-full flex flex-col gap-8 h-fit"></div>
             <div class="container 2 w-full flex flex-col gap-8 h-fit"></div>
             <div class="container 3 w-full flex flex-col gap-8 h-fit"></div>

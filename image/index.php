@@ -20,7 +20,7 @@ $imageTagsString = str_replace(']', '', $imageTagsString);
 $tags = explode(",", $imageTagsString);
 ?>
 
-<main class="mt-40 w-[1000px] mx-auto rounded-2xl flex flex-col p-4 gap-8">
+<main class="mt-40 w-[1100px] mx-auto rounded-2xl flex flex-col p-4 gap-8">
     <div class="flex gap-8 relative">
         <div class="flex flex-col gap-4 w-full h-auto bg-base-200 rounded-2xl rounded-tl-none justify-center">
             <div class="absolute top-0 -left-10 bg-base-200 w-10 h-20 flex flex-col items-center justify-around rounded-l-2xl pl-[2px]">
@@ -38,14 +38,29 @@ $tags = explode(",", $imageTagsString);
             <img src=" <?php echo 'data:image/jpeg;base64,' . base64_encode($imageInfo["picture"]); ?>" alt="" class="w-full h-auto rounded-2xl rounded-tl-none bg-base-200">
         </div>
         <div class="w-6/12 h-inherit bg-base-200 rounded-2xl p-4 flex flex-col min-h-[250px]">
-            <div class="flex gap-2 text-xl leading-4 tag-container">
-                <?php
-                echo '<img src=' . $picture . ' alt="" class="rounded-full object-cover w-12 h-12">';
-                echo $imageInfo["description"];
-                foreach ($tags as $tag) {
-                    echo '<p> ' . $tag . '</p>';
-                }
-                ?>
+            <div class="flex text-xl leading-4 justify-between">
+                <div class="flex gap-1">
+                    <img src='<?php echo $picture ?>' alt="" class="rounded-full object-cover w-12 h-12">
+                    <div class="flex flex-col -mt-2">
+                        <h3 class="text-xl"><?php echo $userInfo["nickname"] ?></h3>
+                        <p class="text-sm opacity-60 -mt-1">@<?php echo $userInfo["username"] ?></p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <div class="rounded-lg border-white border-[1px] p-1 flex h-fit gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                        </svg>
+                        <p id="votes"><?php echo $imageInfo["votes"] ?></p>
+                    </div>
+                    <div class="rounded-lg border-white border-[1px] p-1 flex h-fit gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <p><?php echo $imageInfo["views"] ?></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -61,6 +76,7 @@ $tags = explode(",", $imageTagsString);
     const pictureid = urlParams.get('id');
     const upVote = document.getElementById('upvote');
     const downVote = document.getElementById('downvote');
+    const votes = document.getElementById("votes");
 
     function vote(type) {
         $.ajax({
@@ -70,16 +86,19 @@ $tags = explode(",", $imageTagsString);
                 id: pictureid,
                 type: type
             },
+            dataType: "json",
             success: function(data) {
-                if (data == "") {
-                    console.log("vote not found");
-                } else if (data == 1) {
+                if (data["response"] == null) {
+                    downVote.classList.remove("voted");
+                    upVote.classList.remove("voted");
+                } else if (data["response"] == 1) {
                     upVote.classList.add("voted");
                     downVote.classList.remove("voted");
-                } else if (data == 0) {
+                } else if (data["response"] == 0) {
                     downVote.classList.add("voted");
                     upVote.classList.remove("voted");
                 }
+                votes.innerText = data["votes"]
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Request failed. Status: ' + textStatus + ', error thrown: ' + errorThrown);
