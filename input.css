@@ -173,6 +173,14 @@ input:-webkit-autofill:active {
 .dropdown:not(.dropdown-hover):focus-within .dropdown-content {
   @apply visible opacity-100;
 }
+
+.alert {
+  @apply bg-base-200 p-4 rounded-lg;
+}
+
+.alert-success {
+  @apply bg-success text-white;
+}
 /* slut av stjälning */
 
 .dropdown-content {

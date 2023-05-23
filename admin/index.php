@@ -77,7 +77,9 @@ $stmt = null;
         </div>
     </div>
     <div>
-        Reports
+        <?php
+
+        ?>
     </div>
 </body>
 
