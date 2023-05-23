@@ -20,27 +20,14 @@ $imageTagsString = str_replace(']', '', $imageTagsString);
 $tags = explode(",", $imageTagsString);
 
 if (isset($_POST["comment"])) {
-    $sql = "INSERT INTO reports(userid, pictureid, comment, reporterid) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO reports(userid, pictureid, comment, reporterid) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$imageInfo["userid"], $_GET["id"], $_POST["comment"], $_SESSION["userid"]]);
 
-    header("Location:?id=" . $_GET["id"] . "&report=sent");
+    header("Location:?id=" . $_GET["id"] . "&error=Report%20sent!");
 }
 
 ?>
-
-<?php if (isset($_GET["report"]) and $_GET["report"] == "sent") : ?>
-    <div class="absolute top-32 w-full flex justify-center z-50">
-        <div class="alert alert-success shadow-lg">
-            <div class="flex gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>Report sent!</span>
-            </div>
-        </div>
-    </div>
-<?php endif; ?>
 
 <main class="mt-40 w-[1100px] mx-auto rounded-2xl flex flex-col p-4 gap-8">
     <div class="flex gap-8 relative">
@@ -114,7 +101,7 @@ if (isset($_POST["comment"])) {
 
             </div>
             <div class="w-full flex justify-end gap-2">
-                <a onclick="reportModalToggle()" class="bg-base-100 px-4 py-2 rounded-lg cursor-pointer hover:bg-opacity-50 transition-colors duration-200">Undo</a>
+                <a onclick="reportModalToggle()" class="bg-base-100 px-4 py-2 rounded-lg cursor-pointer hover:bg-opacity-50 transition-colors duration-200">Cancel</a>
                 <button class="bg-error text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200">Report</a>
             </div>
         </form>

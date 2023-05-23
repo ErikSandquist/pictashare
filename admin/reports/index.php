@@ -59,7 +59,7 @@ $reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 Visit
                             </a>
                         <?php else : ?>
-                            <a href="/pictashare/user/?id=<?php echo $report["userid"] ?>">
+                            <a href="/pictashare/profile/?id=<?php echo $report["userid"] ?>">
                                 Visit
                             </a>
                         <?php endif ?>

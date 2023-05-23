@@ -1,7 +1,18 @@
 <?php
 include "../nav.php";
+require_once("../includes/db.php");
+require_once("../includes/functions.php");
 
-// Figure out if the user is visiting their own profile or someone elses.
+// Figure out if the user is visiting their own profile or someone elses. and handle if they are using the id tag
+if (isset($_GET["id"])) {
+    $userInfo = searchDb($conn, null, null, $_GET["id"]);
+    if ($userInfo === false) {
+        header("Location:?user=" . $_SESSION["username"]);
+    } else {
+        header("Location:?user=" . $userInfo["username"]);
+    }
+}
+
 if (isset($_GET["user"])) {
     $username = $_GET["user"];
 } elseif (isset($_SESSION["username"])) {
@@ -10,9 +21,6 @@ if (isset($_GET["user"])) {
     header("Location:../login");
     exit();
 }
-
-require_once("../includes/db.php");
-require_once("../includes/functions.php");
 
 //Get the user's profile information using the username
 $userInfo = searchDb($conn, null, $username, null);
@@ -57,6 +65,14 @@ if (isset($_GET["error"]) and $_GET["error"] == "notfound") {
 $date1 = new DateTime($userInfo["createdate"]);
 $date2 = new DateTime(date("Y/m/d"));
 $days  = $date2->diff($date1)->format('%a');
+
+if (isset($_POST["comment"])) {
+    $sql = "INSERT INTO reports(userid, pictureid, comment, reporterid) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$userInfo["id"], null, $_POST["comment"], $_SESSION["userid"]]);
+
+    header("Location:?user=" . $_GET["user"] . "&error=Report%20sent!");
+}
 
 ?>
 
@@ -114,20 +130,30 @@ $days  = $date2->diff($date1)->format('%a');
                 echo '<p class="mt-4">' . $userInfo["description"] . '</p>';
                 ?>
             </div>
-            <?php
-            if (isset($_SESSION["username"]) and $_SESSION["username"] == $username or $_SESSION["admin"] == 1) {
-                if (isset($editMode) and $editMode == "true") : ?>
-                    <div class="w-full flex justify-end items-start gap-2">
+            <div class="w-[800px] flex justify-end items-center gap-2 h-4">
+                <?php
+                if (isset($_SESSION["username"]) and $_SESSION["username"] == $username or $_SESSION["admin"] == 1) {
+                    if (isset($editMode) and $editMode == "true") : ?>
                         <a class="button outline" href="?user=<?php echo $_GET["user"] ?>&edit=false">Cancel</a>
                         <button type="submit" class="button" name="submit">Save profile</button>
-                    </div>
-                <?php else : ?>
-                    <div class="w-full flex justify-end items-start gap-2">
+                    <?php else : ?>
                         <a href="?user=<?php echo $_GET["user"] ?>&edit=true" class="button outline">Edit profile</a>
                         <a class="button outline" href="../upload">Upload pictures</a>
-                    </div>
-            <?php endif;
-            } ?>
+                <?php endif;
+                } ?>
+                <div class="dropdown dropdown-end">
+                    <label tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-vertical">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="12" cy="5" r="1"></circle>
+                            <circle cx="12" cy="19" r="1"></circle>
+                        </svg></label>
+                    <ul tabindex="0" class="dropdown-content shadow bg-base-100 rounded-box w-40 mt-4 text-sm flex flex-col">
+                        <a onclick="reportModalToggle()">
+                            <li class="rounded-t-lg">Report</li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
 
         </div>
         <div class="flex w-full gap-4 p-4">
@@ -142,9 +168,40 @@ $days  = $date2->diff($date1)->format('%a');
     </main>
 </body>
 
+<div class="fixed w-full h-full top-0 left-0 justify-center items-center bg-base-300 bg-opacity-50 z-50 hidden" id="report-modal">
+    <div class="w-96 bg-base-200 rounded-2xl p-4">
+        <form action="" method="post" class="flex flex-col justify-between">
+            <div>
+                <h2 class="text-xl font-bold mb-1">Report</h2>
+                <p class="text-sm opacity-80">State a reason to report this user:</p>
+
+                <textarea name="comment" cols="30" rows="5" class="form-input profile-input w-full"></textarea>
+
+            </div>
+            <div class="w-full flex justify-end gap-2">
+                <a onclick="reportModalToggle()" class="bg-base-100 px-4 py-2 rounded-lg cursor-pointer hover:bg-opacity-50 transition-colors duration-200">Cancel</a>
+                <button class="bg-error text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200">Report</a>
+            </div>
+        </form>
+    </div>
+</div>
+
 </html>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script>
+    let showReportModal = false;
+    let reportModal = document.getElementById("report-modal");
+
+    function reportModalToggle() {
+        if (showReportModal == false) {
+            reportModal.style.display = "flex";
+            showReportModal = true;
+        } else {
+            reportModal.style.display = "none";
+            showReportModal = false;
+        }
+    }
+
     function imagePreview(fileInput, number) {
         if (fileInput.files && fileInput.files[0]) {
             var fileReader = new FileReader();

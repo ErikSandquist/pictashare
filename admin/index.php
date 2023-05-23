@@ -22,12 +22,6 @@ $stmt->execute();
 $postCount = $stmt->fetchAll(PDO::FETCH_ASSOC)[0]["COUNT(id)"];
 $stmt = null;
 
-$sql = "SELECT COUNT(userid) from comments";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$commentCount = $stmt->fetchAll(PDO::FETCH_ASSOC)[0]["COUNT(userid)"];
-$stmt = null;
-
 $sql = "SELECT COUNT(type) from votes";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -58,7 +52,7 @@ $stmt = null;
 </head>
 
 <body>
-    <div class="max-w-5xl flex justify-between items-center p-16 m-auto">
+    <div class="max-w-3xl flex justify-between items-center p-16 m-auto">
         <div class="bg-base-200 rounded-2xl text-4xl w-24 min-w-fit h-24 flex justify-center items-center p-2 flex-col">
             <p class="text-xl">Users:</p>
             <div class="value" number="<?php echo $userCount; ?>">0</div>
@@ -66,10 +60,6 @@ $stmt = null;
         <div class="bg-base-200 rounded-2xl text-4xl w-24 min-w-fit h-24 flex justify-center items-center p-2 flex-col">
             <p class="text-xl">Posts:</p>
             <div class="value" number="<?php echo $postCount; ?>">0</div>
-        </div>
-        <div class="bg-base-200 rounded-2xl text-4xl w-24 min-w-fit h-24 flex justify-center items-center p-2 flex-col">
-            <p class="text-xl">Comments:</p>
-            <div class="value" number="<?php echo $commentCount; ?>">0</div>
         </div>
         <div class="bg-base-200 rounded-2xl text-4xl w-24 min-w-fit h-24 flex justify-center items-center p-2 flex-col">
             <p class="text-xl">Votes:</p>
