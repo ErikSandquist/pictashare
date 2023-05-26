@@ -49,13 +49,13 @@ if (isset($_POST["comment"])) {
         </div>
         <div class="w-6/12 h-inherit bg-base-200 rounded-2xl p-4 flex flex-col min-h-[250px]">
             <div class="flex text-xl leading-4 justify-between">
-                <div class="flex gap-1">
+                <a href="../profile/?id=<?php echo $imageInfo["userid"] ?>" class="flex gap-1">
                     <img src='<?php echo $picture ?>' alt="" class="rounded-full object-cover w-12 h-12">
                     <div class="flex flex-col -mt-2">
                         <h3 class="text-xl"><?php echo $userInfo["nickname"] ?></h3>
                         <p class="text-sm opacity-60 -mt-1">@<?php echo $userInfo["username"] ?></p>
                     </div>
-                </div>
+                </a>
                 <div class="flex gap-2">
                     <div class="dropdown dropdown-end">
                         <label tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-vertical">
@@ -67,11 +67,6 @@ if (isset($_POST["comment"])) {
                             <a onclick="reportModalToggle()">
                                 <li class="rounded-t-lg">Report</li>
                             </a>
-                            <?php if ($imageInfo["userid"] == $_SESSION["userid"]) : ?>
-                                <a href="/pictashare/random">
-                                    <li class="text-error">Delete</li>
-                                </a>
-                            <?php endif; ?>
                         </ul>
                     </div>
                     <div class="rounded-lg border-white border-[1px] p-1 flex h-fit gap-1">
@@ -83,10 +78,17 @@ if (isset($_POST["comment"])) {
                     </div>
                 </div>
             </div>
+            <div class="my-4 flex gap-2">
+                <?php foreach ($tags as $tag) : ?>
+                    <div class="rounded-lg bg-base-300 inline p-1">
+                        <?php echo $tag; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="w-full">
+                <?php echo $imageInfo["description"] ?>
+            </div>
         </div>
-    </div>
-    <div class="w-full h-auto rounded-2xl bg-base-200 p-4">
-        <h1 class="font-semibold text-2xl">Comments</h1>
     </div>
 </main>
 

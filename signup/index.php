@@ -1,4 +1,6 @@
 <?php
+include "../nav.php";
+
 if (isset($_SESSION["user"])) {
     header("Location:index.php");
 }
@@ -15,17 +17,8 @@ if (isset($_SESSION["user"])) {
     <link rel="stylesheet" href="/pictashare/output.css">
 </head>
 
-<nav class="fixed left-0 top-0 p-[10%]">
-    <a href="../">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-    </a>
-</nav>
-
 <body class="h-full flex items-center justify-center">
-    <form action="../includes/signup.php" method="post" class="flex flex-col w-60 h-full">
+    <form action="../includes/signup.php" method="post" class="flex flex-col w-60 h-full justify-center">
         <h1 class="text-5xl text-center mb-6">Sign up</h1>
         <label for="username">Username</label>
         <input type="text" name="username" id="" class="form-input">

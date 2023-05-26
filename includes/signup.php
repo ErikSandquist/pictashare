@@ -8,10 +8,10 @@ if (isset($_POST["submit"])) {
     require_once "functions.php";
 
     if (searchDb($conn, $email, null, null) !== false) {
-        header("Location: ../signup?error=emailinuse");
+        header("Location: ../signup?error=Email%20already%20in%20use");
         exit();
     } elseif (searchDb($conn, null, $username, null) !== false) {
-        header("Location: ../signup?error=usernameinuse");
+        header("Location: ../signup?error=Username%20taken");
         exit();
     }
 

@@ -34,14 +34,14 @@ function loginUser($conn, $username, $psw)
     $userInfo = searchDb($conn, null, $username, null);
 
     if ($userInfo === false) {
-        header("Location: ../login?error=notfound");
+        header("Location: ../login?error=User%20Not%20found");
         exit();
     }
 
     $pswHashed = $userInfo['password'];
 
     if (password_verify($psw, $pswHashed) === false) {
-        header("Location: ../login?error=wrongpassword");
+        header("Location: ../login?error=Wrong%20password");
         exit();
     }
 

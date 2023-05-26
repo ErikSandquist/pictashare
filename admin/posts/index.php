@@ -43,11 +43,10 @@ $pictures = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td>Creation date</td>
                 <td>Owner</td>
                 <td>Visit</td>
-                <td>Edit</td>
                 <td>Delete</td>
             </tr>
             <?php foreach ($pictures as $picture) : ?>
-                <tr class="text-sm" id="user<?php echo $picture["id"] ?>">
+                <tr class="text-sm" id="post<?php echo $picture["id"] ?>">
                     <?php
                     $image = 'data:image/jpeg;base64,' . base64_encode($picture['picture']);
                     ?>
@@ -61,14 +60,6 @@ $pictures = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td>
                         <a href="/pictashare/image/?id=<?php echo $picture["id"] ?>">
                             Visit
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/pictashare/image/?id=<?php echo $picture["id"] ?>&edit=true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                            </svg>
                         </a>
                     </td>
                     <td>
@@ -91,8 +82,8 @@ $pictures = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="fixed w-full h-full top-0 left-0 justify-center items-center bg-base-300 bg-opacity-50 z-50 hidden" id="modalDelete">
     <div class="w-96 h-48 bg-base-200 rounded-2xl p-4 flex flex-col justify-between">
         <div>
-            <h2 class="text-xl font-bold mb-1">Are you sure you want to delete the account?</h2>
-            <p class="text-sm opacity-80">There is no going back, removing the account will permanently remove the user and all linked data including pictures, comments, votes.</p>
+            <h2 class="text-xl font-bold mb-1">Are you sure you want to delete the post?</h2>
+            <p class="text-sm opacity-80">There is no going back, removing the post will permanently remove the post and all linked data including votes.</p>
         </div>
         <div class="w-full flex justify-end gap-2">
             <a id="denyButton" class="bg-base-100 px-4 py-2 rounded-lg cursor-pointer hover:bg-opacity-50 transition-colors duration-200">No</a>
@@ -128,17 +119,17 @@ $pictures = $stmt->fetchAll(PDO::FETCH_ASSOC);
         modalButtonDelete.style.display = "none";
     }
 
-    function deleteModal(userId) {
+    function deleteModal(postId) {
         $.ajax({
             url: 'delete.php',
             method: 'GET',
             data: {
-                id: userId,
+                id: postId,
             },
             success: function(data) {
-                let userColumn = document.getElementById('user' + data)
+                let postColumn = document.getElementById('post' + data)
 
-                userColumn.remove();
+                postColumn.remove();
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Request failed. Status: ' + textStatus + ', error thrown: ' + errorThrown);

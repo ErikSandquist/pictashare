@@ -178,8 +178,8 @@ input:-webkit-autofill:active {
   @apply bg-base-200 p-4 rounded-lg;
 }
 
-.alert-success {
-  @apply bg-success text-white;
+.alert-warning {
+  @apply bg-warning text-white;
 }
 /* slut av stjälning */
 

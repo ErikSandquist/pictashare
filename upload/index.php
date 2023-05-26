@@ -17,11 +17,11 @@ if (isset($_POST["submit"])) {
             $image = $image['tmp_name'];
             $image = file_get_contents($image);
         } else {
-            header("Location:?error=invalidimage");
+            header("Location:?error=Invalid%20image");
             exit();
         }
     } else {
-        header("Location:?error=noimage");
+        header("Location:?error=No%20image");
         exit();
     }
 

@@ -20,12 +20,14 @@ ob_start();
 
 <?php if (isset($_GET["error"])) : ?>
     <div class="absolute top-32 w-full flex justify-center z-50">
-        <div class="alert alert-success shadow-lg">
-            <div class="flex gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <div class="alert alert-warning shadow-lg">
+            <div class="flex gap-2 items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-black flex-shrink-0 h-8 w-8" fill="none" viewBox="0 0 24 24">
+                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                    <line x1="12" x2="12" y1="9" y2="13"></line>
+                    <line x1="12" x2="12.01" y1="16" y2="17"></line>
                 </svg>
-                <span><?php echo $_GET["error"] ?></span>
+                <span class="text-black"><?php echo $_GET["error"] ?></span>
             </div>
         </div>
     </div>
@@ -34,7 +36,7 @@ ob_start();
 <head>
     <link rel="stylesheet" href="/pictashare/output.css">
 </head>
-<nav class="z-10 fixed top-0 left-0 w-full h-32 flex justify-between p-8 px-40 items-center backdrop-blur-xl">
+<nav class="z-10 fixed top-0 left-0 w-full h-32 flex justify-between p-8 px-8 xl:px-40 items-center backdrop-blur-xl">
     <div class="text-5xl">
         <a href="/pictashare" class="flex gap-4 items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ; transition: 0.3s;">
@@ -42,11 +44,11 @@ ob_start();
                 <circle cx="9" cy="9" r="2"></circle>
                 <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
             </svg>
-            Pictashare
+            <span class="hidden xl:inline">Pictashare</span>
         </a>
     </div>
     <div class="flex items-center h-fit gap-4">
-        <a href="/pictashare/gallery" class="button ghost">Gallery</a>
+        <a href="/pictashare/gallery" class="!hidden !sm:block button ghost">Gallery</a>
         <?php
         if (isset($_SESSION['userid'])) : ?>
             <a href="/pictashare/upload/" class="button outline">Upload</a>
@@ -58,6 +60,9 @@ ob_start();
                     </a>
                     <a href="/pictashare/random">
                         <li>Suprise me</li>
+                    </a>
+                    <a href="/pictashare/gallery" class="!sm:hidden">
+                        <li>Gallery</li>
                     </a>
                     <?php if ($_SESSION["admin"] == 1) : ?>
                         <a href="/pictashare/admin">

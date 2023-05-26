@@ -33,7 +33,7 @@ if (isset($_POST["submit"])) {
         $userInfo = searchDb($conn, null, $username, null);
 
         if ($userInfo != false and $username != $_SESSION["username"]) {
-            header("Location:../profile/?error=usernametaken&edit=true");
+            header("Location:../profile/?error=Username%20taken&edit=true");
             exit();
         } else {
             $_SESSION["username"] = $username;
