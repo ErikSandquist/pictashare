@@ -29,8 +29,8 @@ if (isset($_POST["comment"])) {
 
 ?>
 
-<main class="mt-40 w-[1100px] mx-auto rounded-2xl flex flex-col p-4 gap-8">
-    <div class="flex gap-8 relative">
+<main class="mt-40 xl:w-[1100px] w-full mx-auto rounded-2xl flex flex-col xl:p-4 p-10 gap-8">
+    <div class="flex flex-col xl:flex-row gap-8 relative">
         <div class="flex flex-col gap-4 w-full h-auto bg-base-200 rounded-2xl rounded-tl-none justify-center">
             <div class="absolute top-0 -left-10 bg-base-200 w-10 h-20 flex flex-col items-center justify-around rounded-l-2xl pl-[2px]">
                 <div id="upvote" onclick="vote(1)">
@@ -47,7 +47,7 @@ if (isset($_POST["comment"])) {
             </div>
             <img src=" <?php echo 'data:image/jpeg;base64,' . base64_encode($imageInfo["picture"]); ?>" alt="" class="w-full h-auto rounded-2xl rounded-tl-none bg-base-200">
         </div>
-        <div class="w-6/12 h-inherit bg-base-200 rounded-2xl p-4 flex flex-col min-h-[250px]">
+        <div class="w-full xl:w-6/12 h-inherit bg-base-200 rounded-2xl p-4 flex flex-col min-h-[250px]">
             <div class="flex text-xl leading-4 justify-between">
                 <a href="../profile/?id=<?php echo $imageInfo["userid"] ?>" class="flex gap-1">
                     <img src='<?php echo $picture ?>' alt="" class="rounded-full object-cover w-12 h-12">

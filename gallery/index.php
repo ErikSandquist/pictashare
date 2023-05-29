@@ -19,14 +19,14 @@ $pictures = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Gallery</title>
 </head>
 
-<body class="pt-36 pb-8">
-    <h1 class="w-2/3 m-auto text-center text-4xl bg-base-200 py-2 rounded-t-lg">Gallery</h1>
-    <div class="flex w-2/3 gap-8 p-4 m-auto bg-base-200">
+<body class="pt-36 pb-8 px-4">
+    <h1 class="w-full xl:w-2/3 m-auto text-center text-4xl xl:bg-base-200 py-2 rounded-t-lg">Gallery</h1>
+    <div class="flex w-full xl:w-2/3 gap-2 xl:gap-8 xl:p-4 m-auto xl:bg-base-200">
         <div class="container 1 w-full flex flex-col gap-8 h-fit"></div>
         <div class="container 2 w-full flex flex-col gap-8 h-fit"></div>
         <div class="container 3 w-full flex flex-col gap-8 h-fit"></div>
     </div>
-    <div class="flex justify-center items-center w-2/3 m-auto py-4 bg-base-200 rounded-b-lg">
+    <div class="flex justify-center items-center w-full xl:w-2/3 m-auto py-4 xl:bg-base-200 rounded-b-lg">
         <button id="load-more" class="button">Load More</button>
         <p id="loadedAllText" class="hidden">There is nothing more to load</p>
     </div>

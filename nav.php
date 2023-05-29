@@ -34,6 +34,7 @@ ob_start();
 <?php endif; ?>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/pictashare/output.css">
 </head>
 <nav class="z-10 fixed top-0 left-0 w-full h-32 flex justify-between p-8 px-8 xl:px-40 items-center backdrop-blur-xl">
@@ -48,7 +49,7 @@ ob_start();
         </a>
     </div>
     <div class="flex items-center h-fit gap-4">
-        <a href="/pictashare/gallery" class="!hidden !sm:block button ghost">Gallery</a>
+        <a href="/pictashare/gallery" class="sm:!inline-block button ghost !hidden">Gallery</a>
         <?php
         if (isset($_SESSION['userid'])) : ?>
             <a href="/pictashare/upload/" class="button outline">Upload</a>
@@ -61,7 +62,7 @@ ob_start();
                     <a href="/pictashare/random">
                         <li>Suprise me</li>
                     </a>
-                    <a href="/pictashare/gallery" class="!sm:hidden">
+                    <a href="/pictashare/gallery" class="sm:!hidden">
                         <li>Gallery</li>
                     </a>
                     <?php if ($_SESSION["admin"] == 1) : ?>

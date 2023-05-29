@@ -65,7 +65,7 @@ if (isset($_POST["submit"])) {
 if (!isset($_POST["submit"])) : ?>
 
     <body class="mt-32">
-        <main class="mt-40 w-[800px] mx-auto bg-base-200 rounded-2xl p-4">
+        <main class="mt-40 xl:w-[800px] w-full mx-auto xl:bg-base-200 rounded-2xl p-4">
             <h1 class="font-semibold text-3xl mb-4">Upload picture to gallery</h1>
             <form action="" method="post" enctype="multipart/form-data" class="w-full flex flex-col justify-center mb-0" onkeydown="return event.key != 'Enter'">
                 <label for="image" id="imageBox" class="w-full h-auto block min-h-[400px] max-h-[500px] form-input profile-input relative p-0 overflow-hidden">

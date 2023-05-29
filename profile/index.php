@@ -87,30 +87,30 @@ if (isset($_POST["comment"])) {
 </head>
 
 <body>
-    <main class="mt-40 w-[800px] mx-auto bg-base-200 rounded-2xl">
+    <main class="mt-32 w-full xl:w-[800px] mx-auto xl:bg-base-200 rounded-2xl">
         <?php
         if (isset($editMode) and $editMode == "false") {
             echo '<img src=' . $banner . ' alt="" class="w-full h-36 rounded-t-2xl object-cover">
-                  <img src=' . $picture . ' alt="" class="h-32 w-32 rounded-full bg-base-200 p-2 -mt-16 ml-12 inline object-cover">';
+                  <img src=' . $picture . ' alt="" class="h-32 w-32 rounded-full xl:bg-base-200 p-2 -mt-16 ml-12 inline object-cover">';
         } elseif (isset($editMode) and $editMode == "true") {
             echo '<form action="/pictashare/includes/saveprofile.php" method="post" enctype="multipart/form-data">';
 
             echo '<label class="cursor-pointer">
                     <input type="file" class="hidden" name="banner" id="image1" accept"image/apng, image/avif, image/gif, image/jpeg, image/png, image/webp"/>
-                    <div id="preview1" class="file-upload bg-base-200 w-full h-36 rounded-t-2xl overflow-hidden flex items-center">
+                    <div id="preview1" class="file-upload xl:bg-base-200 w-full h-36 rounded-t-2xl overflow-hidden flex items-center">
                         <img src=' . $banner . ' alt="" class="object-cover">
                     </div>
                  </label>';
 
             echo '<label class="h-32 w-32 -mt-16 ml-12 block relative cursor-pointer">
                     <input type="file" class="hidden" name="picture" id="image2" accept"image/apng, image/avif, image/gif, image/jpeg, image/png, image/webp"/>
-                    <div id="preview2" class="file-upload rounded-full bg-base-200 p-2 overflow-hidden w-full h-full flex items-center">
+                    <div id="preview2" class="file-upload rounded-full xl:bg-base-200 p-2 overflow-hidden w-full h-full flex items-center">
                         <img src=' . $picture . ' alt="" class="rounded-full object-cover w-full h-full">
                     </div>
                  </label>';
         }
         ?>
-        <div class="flex px-12 p-4">
+        <div class="flex flex-col xl:flex-row px-12 p-4">
             <div class="w-full">
                 <?php
                 if (isset($editMode) and $editMode == "true") : ?>
@@ -130,7 +130,7 @@ if (isset($_POST["comment"])) {
                 echo '<p class="mt-4">' . $userInfo["description"] . '</p>';
                 ?>
             </div>
-            <div class="w-[800px] flex justify-end items-center gap-2 h-4">
+            <div class="xl:w-[800px] w-full flex justify-center xl:justify-end items-center gap-2 h-4 mt-8 xl:mt-0">
                 <?php
                 if (isset($_SESSION["username"]) and $_SESSION["username"] == $username or $_SESSION["admin"] == 1) {
                     if (isset($editMode) and $editMode == "true") : ?>
@@ -138,7 +138,7 @@ if (isset($_POST["comment"])) {
                         <button type="submit" class="button" name="submit">Save profile</button>
                     <?php else : ?>
                         <a href="?user=<?php echo $_GET["user"] ?>&edit=true" class="button outline">Edit profile</a>
-                        <a class="button outline" href="../upload">Upload pictures</a>
+                        <a class="button outline" href="../upload">Upload</a>
                 <?php endif;
                 } ?>
                 <div class="dropdown dropdown-end">
@@ -156,7 +156,7 @@ if (isset($_POST["comment"])) {
             </div>
 
         </div>
-        <div class="flex w-full gap-4 p-4">
+        <div class="flex w-full gap-2 xl:gap-4 p-4">
             <div class="container 1 w-full flex flex-col gap-8 h-fit"></div>
             <div class="container 2 w-full flex flex-col gap-8 h-fit"></div>
             <div class="container 3 w-full flex flex-col gap-8 h-fit"></div>
