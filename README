@@ -1,0 +1,11 @@
+Admin konto:
+username:admin
+password:Gu*tkz1XN2AWiPUMvp
+
+sql databasen ligger med som pictashare.sql
+
+Tailwind kort
+Alla klasser blir till css.
+
+Min egna css ligger i input.css (Delar här är också tailwind)
+Det som genereras är output.css
