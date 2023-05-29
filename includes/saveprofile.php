@@ -4,6 +4,15 @@ session_start();
 if (isset($_POST["submit"])) {
     $userid = $_SESSION["userid"];
 
+    require_once "db.php";
+    require_once "functions.php";
+
+    foreach ($_POST as $post) {
+        $i++;
+        $post = cleanInput($post);
+        $_POST[$i] = $post;
+    }
+
     if ($_FILES["banner"]["name"] != "") {
         $banner = $_FILES["banner"];
     } else {
@@ -20,9 +29,6 @@ if (isset($_POST["submit"])) {
     $username = $_POST["username"];
 
     $description = $_POST["description"];
-
-    require_once "db.php";
-    require_once "functions.php";
 
     if ($nickname == "") {
         $nickname = null;

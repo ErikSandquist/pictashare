@@ -79,3 +79,11 @@ function loadPicture($conn, $id, $sort, $userid, $tags)
 
     return $row;
 }
+
+function cleanInput($input)
+{
+    $output = strip_tags($input);
+    $output = htmlspecialchars($output, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+    return $output;
+}

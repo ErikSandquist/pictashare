@@ -1,11 +1,18 @@
 <?php
 if (isset($_POST["submit"])) {
-    $username = $_POST["username"];
-    $email = $_POST["email"];
-    $psw = $_POST["psw"];
 
     require_once "db.php";
     require_once "functions.php";
+
+    foreach ($_POST as $post) {
+        $i++;
+        $post = cleanInput($post);
+        $_POST[$i] = $post;
+    }
+
+    $username = $_POST["username"];
+    $email = $_POST["email"];
+    $psw = $_POST["psw"];
 
     if (searchDb($conn, $email, null, null) !== false) {
         header("Location: ../signup?error=Email%20already%20in%20use");

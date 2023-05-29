@@ -27,6 +27,12 @@ $stmt = $conn->prepare($sql);
 $stmt->execute();
 $votesCount = $stmt->fetchAll(PDO::FETCH_ASSOC)[0]["COUNT(type)"];
 $stmt = null;
+
+$sql = "SELECT * from reports ORDER BY id DESC LIMIT 3";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt = null;
 ?>
 
 <!-- Just a smaller nav, just a preference and users wont see it anyways -->
@@ -52,7 +58,7 @@ $stmt = null;
 </head>
 
 <body>
-    <div class="max-w-3xl flex justify-between items-center p-16 m-auto">
+    <div class="max-w-2xl flex justify-between items-center p-8 m-auto">
         <div class="bg-base-200 rounded-2xl text-4xl w-24 min-w-fit h-24 flex justify-center items-center p-2 flex-col">
             <p class="text-xl">Users:</p>
             <div class="value" number="<?php echo $userCount; ?>">0</div>
@@ -66,10 +72,43 @@ $stmt = null;
             <div class="value" number="<?php echo $votesCount; ?>">0</div>
         </div>
     </div>
-    <div>
-        <?php
-
-        ?>
+    <div class="flex justify-center items-center">
+        <table class="mx-8 admintable">
+            <tbody>
+                <tr class="[&>td]:!h-fit">
+                    <td>Id</td>
+                    <td>Picture Id</td>
+                    <td>User Id</td>
+                    <td>Comment</td>
+                    <td>Reporter Id</td>
+                    <td>Done</td>
+                    <td>Show</td>
+                </tr>
+                <?php foreach ($reports as $report) : ?>
+                    <tr class="text-sm">
+                        <td><?php echo $report["id"] ?></td>
+                        <td><?php echo $report["pictureid"] ?></td>
+                        <td><?php echo $report["userid"] ?></td>
+                        <td><?php echo $report["comment"] ?></td>
+                        <td><?php echo $report["reporterid"] ?></td>
+                        <td><input type="checkbox" name="done" class="checkbox form-input w-2 h-2 p-2.5 !border-white" id="report<?php echo $report["id"] ?>" onclick="reportDone(<?php echo $report["id"] ?>)" <?php if ($report["status"] == 1) {
+                                                                                                                                                                                                                    echo "checked";
+                                                                                                                                                                                                                } ?>></td>
+                        <td>
+                            <?php if (isset($report["pictureid"])) : ?>
+                                <a href="/pictashare/image/?id=<?php echo $report["pictureid"] ?>">
+                                    Visit
+                                </a>
+                            <?php else : ?>
+                                <a href="/pictashare/profile/?id=<?php echo $report["userid"] ?>">
+                                    Visit
+                                </a>
+                            <?php endif ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 </body>
 

@@ -67,6 +67,13 @@ $date2 = new DateTime(date("Y/m/d"));
 $days  = $date2->diff($date1)->format('%a');
 
 if (isset($_POST["comment"])) {
+
+    foreach ($_POST as $post) {
+        $i++;
+        $post = cleanInput($post);
+        $_POST[$i] = $post;
+    }
+
     $sql = "INSERT INTO reports(userid, pictureid, comment, reporterid) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$userInfo["id"], null, $_POST["comment"], $_SESSION["userid"]]);

@@ -67,6 +67,9 @@ if (isset($_POST["comment"])) {
                             <a onclick="reportModalToggle()">
                                 <li class="rounded-t-lg">Report</li>
                             </a>
+                            <a onclick="deleteModalToggle()">
+                                <li class="rounded-b-lg text-error">Delete</li>
+                            </a>
                         </ul>
                     </div>
                     <div class="rounded-lg border-white border-[1px] p-1 flex h-fit gap-1">
@@ -110,10 +113,25 @@ if (isset($_POST["comment"])) {
     </div>
 </div>
 
+<div class="fixed w-full h-full top-0 left-0 justify-center items-center bg-base-300 bg-opacity-50 z-50 hidden" id="modalDeleteImage">
+    <div class="w-96 h-48 bg-base-200 rounded-2xl p-4 flex flex-col justify-between">
+        <div>
+            <h2 class="text-xl font-bold mb-1">Are you sure you want to delete the post?</h2>
+            <p class="text-sm opacity-80">There is no going back, removing the post will permanently remove the post and all linked data including votes.</p>
+        </div>
+        <div class="w-full flex justify-end gap-2">
+            <a onclick="deleteModalToggle()" class="bg-base-100 px-4 py-2 rounded-lg cursor-pointer hover:bg-opacity-50 transition-colors duration-200">No</a>
+            <a href="../includes/delete.php?id=<?php echo $imageInfo["id"] ?>" class="bg-error text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200">Delete</a>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script>
     let showReportModal = false;
+    let showDeleteModal = false;
     let reportModal = document.getElementById("report-modal");
+    let modalDeleteImage = document.getElementById("modalDeleteImage");
 
     function reportModalToggle() {
         if (showReportModal == false) {
@@ -125,6 +143,15 @@ if (isset($_POST["comment"])) {
         }
     }
 
+    function deleteModalToggle() {
+        if (showDeleteModal == false) {
+            modalDeleteImage.style.display = "flex";
+            showDeleteModal = true;
+        } else {
+            modalDeleteImage.style.display = "none";
+            showDeleteModal = false;
+        }
+    }
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);

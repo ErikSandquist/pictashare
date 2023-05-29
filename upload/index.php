@@ -2,8 +2,15 @@
 include "../nav.php";
 
 if (isset($_POST["submit"])) {
+    $i = 0;
     require_once "../includes/db.php";
     require_once "../includes/functions.php";
+
+    foreach ($_POST as $post) {
+        $i++;
+        $post = cleanInput($post);
+        $_POST[$i] = $post;
+    }
 
     if ($_FILES["image"]["name"] != "") {
         $image = $_FILES["image"];
